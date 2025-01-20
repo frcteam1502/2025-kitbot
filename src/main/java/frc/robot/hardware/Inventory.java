@@ -1,17 +1,31 @@
 package frc.robot.hardware;
 
+import java.util.Arrays;
+import java.util.function.Consumer;
+
 import org.team1502.configuration.CAN.Manufacturer;
 import org.team1502.configuration.builders.motors.Motor;
 import org.team1502.configuration.factory.PartFactory;
+import org.team1502.configuration.factory.RobotConfiguration;
+
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 public class Inventory {
-    public static PartFactory Sensors(PartFactory inventory) {return inventory
+    public static class Names {
+        public static class Motors {
+            public static String Mecanum = "Mecanum Motor";
+        }
+    }
+    public static RobotConfiguration Parts(RobotConfiguration config, Consumer<PartFactory>... factories) {
+        return config.Parts(parts->{Arrays.asList(factories).forEach(factory->factory.accept(parts)); return parts;});
+    }
+
+    public static void Sensors(PartFactory inventory) {inventory
         .Pigeon2(p->p);
     }
 
-    public static PartFactory Motors(PartFactory inventory) {return inventory
+    public static void Motors(PartFactory inventory) {inventory
         .Motor(Motor.NEO, m -> m
             .MotorType(MotorType.kBrushless)
             .FreeSpeedRPM(5_820.0) // from MK4i docs, see data sheet for empirical values
@@ -26,8 +40,8 @@ public class Inventory {
         );
     }
 
-    public static PartFactory Kitbot(PartFactory inventory) { return inventory
-        .MotorController("Mecanum Motor", Manufacturer.REVRobotics, c->c
+    public static void Kitbot(PartFactory inventory) { inventory
+        .MotorController(Names.Motors.Mecanum, Manufacturer.REVRobotics, c->c
             .Motor(Motor.NEO)
             .IdleMode(IdleMode.kBrake)
             .GearBox(g-> g

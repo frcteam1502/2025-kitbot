@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix6.hardware.Pigeon2;
+
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkMax;
 
@@ -14,45 +16,41 @@ import edu.wpi.first.math.kinematics.MecanumDriveOdometry;
 import edu.wpi.first.math.kinematics.MecanumDriveWheelPositions;
 import edu.wpi.first.math.kinematics.MecanumDriveWheelSpeeds;
 import edu.wpi.first.util.sendable.SendableRegistry;
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.DriveConstants;
-import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DriveSubsystem extends SubsystemBase {
-  private final SparkMax m_frontLeft; // = new SparkMax(DriveConstants.kFrontLeftMotorPort);
-  private final SparkMax m_rearLeft; // = new PWMSparkMax(DriveConstants.kRearLeftMotorPort);
-  private final SparkMax m_frontRight; // = new PWMSparkMax(DriveConstants.kFrontRightMotorPort);
-  private final SparkMax m_rearRight; // = new PWMSparkMax(DriveConstants.kRearRightMotorPort);
+  private final SparkMax m_frontLeft;
+  private final RelativeEncoder m_frontLeftEncoder;
+  
+  private final SparkMax m_rearLeft;
+  private final RelativeEncoder m_rearLeftEncoder;
+  
+  private final SparkMax m_frontRight;
+  private final RelativeEncoder m_frontRightEncoder;
+  
+  private final SparkMax m_rearRight;
+  private final RelativeEncoder m_rearRightEncoder;
 
   private final MecanumDrive m_drive;
 
-  // The front-left-side drive encoder
-  private final RelativeEncoder m_frontLeftEncoder;
-
-  // The rear-left-side drive encoder
-  private final RelativeEncoder m_rearLeftEncoder;
-
-  // The front-right--side drive encoder
-  private final RelativeEncoder m_frontRightEncoder;
-
-  // The rear-right-side drive encoder
-  private final RelativeEncoder m_rearRightEncoder;
-
   // The gyro sensor
-  private final ADXRS450_Gyro m_gyro = new ADXRS450_Gyro();
+  private final Pigeon2 m_gyro;
 
   // Odometry class for tracking robot pose
-  MecanumDriveOdometry m_odometry =
+  MecanumDriveOdometry m_odometry;
+
+  /** Creates a new DriveSubsystem. */
+  public DriveSubsystem(RobotConfiguration robotConfiguration) {
+    m_gyro = robotConfiguration.Pigeon2().buildPigeon2();
+    m_odometry =
       new MecanumDriveOdometry(
           DriveConstants.kDriveKinematics,
           m_gyro.getRotation2d(),
           new MecanumDriveWheelPositions());
 
-  /** Creates a new DriveSubsystem. */
-  public DriveSubsystem(RobotConfiguration robotConfiguration) {
     m_frontLeft = robotConfiguration.MotorController("Front Left").buildSparkMax();
     m_frontRight = robotConfiguration.MotorController("Front Right").buildSparkMax();
     m_rearLeft = robotConfiguration.MotorController("Rear Left").buildSparkMax();
@@ -68,7 +66,7 @@ public class DriveSubsystem extends SubsystemBase {
     SendableRegistry.addChild(m_drive, m_rearLeft);
     SendableRegistry.addChild(m_drive, m_frontRight);
     SendableRegistry.addChild(m_drive, m_rearRight);
-
+    SmartDashboard.putData(m_drive);
   }
 
   @Override
