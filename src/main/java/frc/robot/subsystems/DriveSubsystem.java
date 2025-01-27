@@ -9,28 +9,31 @@ import com.ctre.phoenix6.hardware.Pigeon2;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkMax;
 
+import org.team1502.configuration.annotations.SubsystemInfo;
 import org.team1502.configuration.factory.RobotConfiguration;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.MecanumDriveOdometry;
 import edu.wpi.first.math.kinematics.MecanumDriveWheelPositions;
 import edu.wpi.first.math.kinematics.MecanumDriveWheelSpeeds;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.util.sendable.SendableRegistry;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.DriveConstants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+@SubsystemInfo(disabled = true)
 public class DriveSubsystem extends SubsystemBase {
   private final SparkMax m_frontLeft;
   private final RelativeEncoder m_frontLeftEncoder;
-  
+
   private final SparkMax m_rearLeft;
   private final RelativeEncoder m_rearLeftEncoder;
-  
+
   private final SparkMax m_frontRight;
   private final RelativeEncoder m_frontRightEncoder;
-  
+
   private final SparkMax m_rearRight;
   private final RelativeEncoder m_rearRightEncoder;
 
@@ -45,11 +48,10 @@ public class DriveSubsystem extends SubsystemBase {
   /** Creates a new DriveSubsystem. */
   public DriveSubsystem(RobotConfiguration robotConfiguration) {
     m_gyro = robotConfiguration.Pigeon2().buildPigeon2();
-    m_odometry =
-      new MecanumDriveOdometry(
-          DriveConstants.kDriveKinematics,
-          m_gyro.getRotation2d(),
-          new MecanumDriveWheelPositions());
+    m_odometry = new MecanumDriveOdometry(
+        DriveConstants.kDriveKinematics,
+        m_gyro.getRotation2d(),
+        new MecanumDriveWheelPositions());
 
     m_frontLeft = robotConfiguration.MotorController("Front Left").buildSparkMax();
     m_frontRight = robotConfiguration.MotorController("Front Right").buildSparkMax();
@@ -59,7 +61,7 @@ public class DriveSubsystem extends SubsystemBase {
     m_frontRightEncoder = m_frontRight.getEncoder();
     m_rearLeftEncoder = m_rearLeft.getEncoder();
     m_rearRightEncoder = m_rearRight.getEncoder();
-    
+
     m_drive = new MecanumDrive(m_frontLeft::set, m_rearLeft::set, m_frontRight::set, m_rearRight::set);
     SendableRegistry.addChild(m_drive, m_frontLeft);
     SendableRegistry.addChild(m_drive, m_frontLeft);
@@ -72,7 +74,18 @@ public class DriveSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // Update the odometry in the periodic block
-    m_odometry.update(m_gyro.getRotation2d(), getCurrentWheelDistances());
+    var rotation = m_gyro.getRotation2d();
+    MecanumDriveWheelPositions distances = getCurrentWheelDistances();
+
+    m_odometry.update(rotation, distances);
+
+    SmartDashboard.putNumber("rotation", rotation.getDegrees());
+    //SmartDashboard.putNumber("pConv", m_frontLeft.configAccessor.encoder.getPositionConversionFactor());
+    SmartDashboard.putNumber("front left", Units.metersToInches(distances.frontLeftMeters));
+    SmartDashboard.putNumber("front right", Units.metersToInches(distances.frontRightMeters));
+    SmartDashboard.putNumber("rear left", Units.metersToInches(distances.rearLeftMeters));
+    SmartDashboard.putNumber("rear right", Units.metersToInches(distances.rearRightMeters));
+    
   }
 
   /**
@@ -94,13 +107,16 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   /**
-   * Drives the robot at given x, y and theta speeds. Speeds range from [-1, 1] and the linear
+   * Drives the robot at given x, y and theta speeds. Speeds range from [-1, 1]
+   * and the linear
    * speeds have no effect on the angular speed.
    *
-   * @param xSpeed Speed of the robot in the x direction (forward/backwards).
-   * @param ySpeed Speed of the robot in the y direction (sideways).
-   * @param rot Angular rate of the robot.
-   * @param fieldRelative Whether the provided x and y speeds are relative to the field.
+   * @param xSpeed        Speed of the robot in the x direction
+   *                      (forward/backwards).
+   * @param ySpeed        Speed of the robot in the y direction (sideways).
+   * @param rot           Angular rate of the robot.
+   * @param fieldRelative Whether the provided x and y speeds are relative to the
+   *                      field.
    */
   public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative) {
     if (fieldRelative) {
@@ -134,37 +150,37 @@ public class DriveSubsystem extends SubsystemBase {
    * Gets the front left drive encoder.
    *
    * @return the front left drive encoder
-   public Encoder getFrontLeftEncoder() {
-    return m_frontLeftEncoder;
-  }
-  */
+   *         public Encoder getFrontLeftEncoder() {
+   *         return m_frontLeftEncoder;
+   *         }
+   */
 
   /**
    * Gets the rear left drive encoder.
    *
    * @return the rear left drive encoder
-   public Encoder getRearLeftEncoder() {
-    return m_rearLeftEncoder;
-  }
-  */
+   *         public Encoder getRearLeftEncoder() {
+   *         return m_rearLeftEncoder;
+   *         }
+   */
 
   /**
    * Gets the front right drive encoder.
    *
    * @return the front right drive encoder
-   public Encoder getFrontRightEncoder() {
-    return m_frontRightEncoder;
-  }
-  */
+   *         public Encoder getFrontRightEncoder() {
+   *         return m_frontRightEncoder;
+   *         }
+   */
 
   /**
    * Gets the rear right drive encoder.
    *
    * @return the rear right encoder
-   public Encoder getRearRightEncoder() {
-    return m_rearRightEncoder;
-  }
-  */
+   *         public Encoder getRearRightEncoder() {
+   *         return m_rearRightEncoder;
+   *         }
+   */
 
   /**
    * Gets the current wheel speeds.
@@ -182,7 +198,8 @@ public class DriveSubsystem extends SubsystemBase {
   /**
    * Gets the current wheel distance measurements.
    *
-   * @return the current wheel distance measurements in a MecanumDriveWheelPositions object.
+   * @return the current wheel distance measurements in a
+   *         MecanumDriveWheelPositions object.
    */
   public MecanumDriveWheelPositions getCurrentWheelDistances() {
     return new MecanumDriveWheelPositions(
@@ -193,7 +210,8 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   /**
-   * Sets the max output of the drive. Useful for scaling the drive to drive more slowly.
+   * Sets the max output of the drive. Useful for scaling the drive to drive more
+   * slowly.
    *
    * @param maxOutput the maximum output to which the drive will be constrained
    */
