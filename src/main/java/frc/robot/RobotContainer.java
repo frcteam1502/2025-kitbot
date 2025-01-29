@@ -52,6 +52,7 @@ public class RobotContainer {
         robotFactory = RobotFactory.Create(Robot.class, robotConfiguration);
 
         m_robotDrive = robotFactory.getInstance(DriveSubsystem.class);
+        //m_robotDrive.setMaxOutput(0.25);
 
     // Configure the button bindings
     configureButtonBindings();
@@ -65,8 +66,8 @@ public class RobotContainer {
             () ->
                 m_robotDrive.drive(
                     -m_driverController.getLeftY(),
-                    m_driverController.getRightX(),
                     m_driverController.getLeftX(),
+                    m_driverController.getRightX(),
                     false),
             m_robotDrive));
   }

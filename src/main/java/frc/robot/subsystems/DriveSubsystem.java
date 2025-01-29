@@ -23,7 +23,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.DriveConstants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-@SubsystemInfo(disabled = true)
+@SubsystemInfo(disabled = false)
 public class DriveSubsystem extends SubsystemBase {
   private final SparkMax m_frontLeft;
   private final RelativeEncoder m_frontLeftEncoder;
@@ -64,7 +64,6 @@ public class DriveSubsystem extends SubsystemBase {
 
     m_drive = new MecanumDrive(m_frontLeft::set, m_rearLeft::set, m_frontRight::set, m_rearRight::set);
     SendableRegistry.addChild(m_drive, m_frontLeft);
-    SendableRegistry.addChild(m_drive, m_frontLeft);
     SendableRegistry.addChild(m_drive, m_rearLeft);
     SendableRegistry.addChild(m_drive, m_frontRight);
     SendableRegistry.addChild(m_drive, m_rearRight);
@@ -80,12 +79,10 @@ public class DriveSubsystem extends SubsystemBase {
     m_odometry.update(rotation, distances);
 
     SmartDashboard.putNumber("rotation", rotation.getDegrees());
-    //SmartDashboard.putNumber("pConv", m_frontLeft.configAccessor.encoder.getPositionConversionFactor());
-    SmartDashboard.putNumber("front left", Units.metersToInches(distances.frontLeftMeters));
-    SmartDashboard.putNumber("front right", Units.metersToInches(distances.frontRightMeters));
-    SmartDashboard.putNumber("rear left", Units.metersToInches(distances.rearLeftMeters));
-    SmartDashboard.putNumber("rear right", Units.metersToInches(distances.rearRightMeters));
-    
+    SmartDashboard.putNumber("front left (in)", Units.metersToInches(distances.frontLeftMeters));
+    SmartDashboard.putNumber("front right (in)", Units.metersToInches(distances.frontRightMeters));
+    SmartDashboard.putNumber("rear left (in)", Units.metersToInches(distances.rearLeftMeters));
+    SmartDashboard.putNumber("rear right (in)", Units.metersToInches(distances.rearRightMeters));  
   }
 
   /**
@@ -133,8 +130,8 @@ public class DriveSubsystem extends SubsystemBase {
       double rearLeftVoltage,
       double rearRightVoltage) {
     m_frontLeft.setVoltage(frontLeftVoltage);
-    m_rearLeft.setVoltage(rearLeftVoltage);
     m_frontRight.setVoltage(frontRightVoltage);
+    m_rearLeft.setVoltage(rearLeftVoltage);
     m_rearRight.setVoltage(rearRightVoltage);
   }
 
@@ -190,8 +187,8 @@ public class DriveSubsystem extends SubsystemBase {
   public MecanumDriveWheelSpeeds getCurrentWheelSpeeds() {
     return new MecanumDriveWheelSpeeds(
         m_frontLeftEncoder.getVelocity(),
-        m_rearLeftEncoder.getVelocity(),
         m_frontRightEncoder.getVelocity(),
+        m_rearLeftEncoder.getVelocity(),
         m_rearRightEncoder.getVelocity());
   }
 
@@ -204,8 +201,8 @@ public class DriveSubsystem extends SubsystemBase {
   public MecanumDriveWheelPositions getCurrentWheelDistances() {
     return new MecanumDriveWheelPositions(
         m_frontLeftEncoder.getPosition(),
-        m_rearLeftEncoder.getPosition(),
         m_frontRightEncoder.getPosition(),
+        m_rearLeftEncoder.getPosition(),
         m_rearRightEncoder.getPosition());
   }
 

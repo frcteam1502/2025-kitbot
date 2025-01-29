@@ -11,6 +11,8 @@ import org.team1502.configuration.factory.RobotConfiguration;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
+import edu.wpi.first.math.util.Units;
+
 public class Inventory {
     public static class Names {
         public static class Motors {
@@ -43,12 +45,11 @@ public class Inventory {
     public static void Kitbot(PartFactory inventory) { inventory
         .MotorController(Names.Motors.Mecanum, Manufacturer.REVRobotics, c->c
             .Motor(Motor.NEO)
-            .IdleMode(IdleMode.kBrake)
+            .IdleMode(IdleMode.kCoast)
             .GearBox(g-> g
-                .Gear("Stage1", 14, 50)
-                //.Gear("Stage2", 18, 46) // 9.13:1
-                .Gear("Stage2", 19, 45) // 8.46 -- 8.45:1 ordered?
-                .Wheel(8.0)
+                 .Gear("Stage1", 14, 50) // 9.13:1
+                 .Gear("Stage2", 14, 50) // 12.75:1, 44.11 ft-lbs, 445.18 rpm, 15.54 ft/s
+                 .Wheel(8.0)
             )
             .SmartCurrentLimit(40)
         );
