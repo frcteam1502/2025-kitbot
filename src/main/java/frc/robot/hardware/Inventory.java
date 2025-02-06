@@ -17,6 +17,7 @@ public class Inventory {
     public static class Names {
         public static class Motors {
             public static String Mecanum = "Mecanum Motor";
+            public static String Elevator = "Elevator Motor";
         }
     }
     public static RobotConfiguration Parts(RobotConfiguration config, Consumer<PartFactory>... factories) {
@@ -45,15 +46,27 @@ public class Inventory {
     public static void Kitbot(PartFactory inventory) { inventory
         .MotorController(Names.Motors.Mecanum, Manufacturer.REVRobotics, c->c
             .Motor(Motor.NEO)
-            .IdleMode(IdleMode.kCoast)
+            .IdleMode(IdleMode.kBrake)
             .GearBox(g-> g
                  .Gear("Stage1", 14, 50) // 9.13:1
                  .Gear("Stage2", 14, 50) // 12.75:1, 44.11 ft-lbs, 445.18 rpm, 15.54 ft/s
                  .Wheel(8.0)
             )
             .SmartCurrentLimit(40)
+        )
+        .MotorController(Names.Motors.Elevator, Manufacturer.REVRobotics, c->c
+            .Motor(Motor.NEO)
+            .IdleMode(IdleMode.kBrake)
+            .GearBox(g-> g
+                 .Gear("Stage1", 1, 4) 
+                 .Gear("Stage2", 1, 5) 
+                 .Wheel(1.28) // 16 tooth gear pitch diameter
+            )
+            .SmartCurrentLimit(40)
         );
     }
+
+    
 
     public static PartFactory Mk4iL3(PartFactory inventory) { return inventory
         .SwerveModule(sm -> sm

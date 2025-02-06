@@ -17,8 +17,10 @@ import edu.wpi.first.wpilibj.XboxController.Button;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
+import frc.robot.commands.ForwardAuto;
 import frc.robot.hardware.Kitbot;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.ElevatorSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -39,6 +41,7 @@ import org.team1502.injection.RobotFactory;
 public class RobotContainer {
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive;
+  private final ElevatorSubsystem m_elevator;
 
   // The driver's controller
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
@@ -52,6 +55,7 @@ public class RobotContainer {
         robotFactory = RobotFactory.Create(Robot.class, robotConfiguration);
 
         m_robotDrive = robotFactory.getInstance(DriveSubsystem.class);
+        m_elevator = robotFactory.getInstance(ElevatorSubsystem.class);
         //m_robotDrive.setMaxOutput(0.25);
 
     // Configure the button bindings
@@ -83,7 +87,13 @@ public class RobotContainer {
     new JoystickButton(m_driverController, Button.kRightBumper.value)
         .onTrue(new InstantCommand(() -> m_robotDrive.setMaxOutput(0.5)))
         .onFalse(new InstantCommand(() -> m_robotDrive.setMaxOutput(1)));
-  }
+    new JoystickButton(m_driverController, Button.kA.value)
+        .onTrue(new InstantCommand(() -> m_elevator.lower()))
+        .onFalse(new InstantCommand(() -> m_elevator.stop()));
+    new JoystickButton(m_driverController, Button.kY.value)
+        .onTrue(new InstantCommand(() -> m_elevator.raise()))
+        .onFalse(new InstantCommand(() -> m_elevator.stop()));
+    }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
@@ -91,6 +101,11 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
+    
+    return new ForwardAuto(m_robotDrive);
+}
+
+  public Command getAutonomousCommand1() {
     // Create config for trajectory
     TrajectoryConfig config =
         new TrajectoryConfig(
@@ -105,7 +120,7 @@ public class RobotContainer {
             // Start at the origin facing the +X direction
             Pose2d.kZero,
             // Pass through these two interior waypoints, making an 's' curve path
-            List.of(new Translation2d(1, 1), new Translation2d(2, -1)),
+            List.of(new Translation2d(1, 0), new Translation2d(2, 0)),
             // End 3 meters straight ahead of where we started, facing forward
             new Pose2d(3, 0, Rotation2d.kZero),
             config);
