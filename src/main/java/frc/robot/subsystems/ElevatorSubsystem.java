@@ -1,11 +1,16 @@
 package frc.robot.subsystems;
 
+import org.team1502.configuration.annotations.DefaultCommand;
+import org.team1502.configuration.annotations.SubsystemInfo;
 import org.team1502.configuration.factory.RobotConfiguration;
 
 import com.revrobotics.spark.SparkMax;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.commands.OperatorCommand;
 
+@SubsystemInfo(disabled = false)
+@DefaultCommand(command = OperatorCommand.class)
 public class ElevatorSubsystem extends SubsystemBase {
     final SparkMax m_motor;
     public ElevatorSubsystem(RobotConfiguration robotConfiguration){

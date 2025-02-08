@@ -41,7 +41,6 @@ import org.team1502.injection.RobotFactory;
 public class RobotContainer {
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive;
-  private final ElevatorSubsystem m_elevator;
 
   // The driver's controller
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
@@ -55,44 +54,19 @@ public class RobotContainer {
         robotFactory = RobotFactory.Create(Robot.class, robotConfiguration);
 
         m_robotDrive = robotFactory.getInstance(DriveSubsystem.class);
-        m_elevator = robotFactory.getInstance(ElevatorSubsystem.class);
         //m_robotDrive.setMaxOutput(0.25);
 
-    // Configure the button bindings
-    configureButtonBindings();
+        // Configure the button bindings
+        configureButtonBindings();
+    }
 
-    // Configure default commands
-    // Set the default drive command to split-stick arcade drive
-    m_robotDrive.setDefaultCommand(
-        // A split-stick arcade command, with forward/backward controlled by the left
-        // hand, and turning controlled by the right.
-        new RunCommand(
-            () ->
-                m_robotDrive.drive(
-                    -m_driverController.getLeftY(),
-                    m_driverController.getLeftX(),
-                    m_driverController.getRightX(),
-                    false),
-            m_robotDrive));
-  }
-
-  /**
-   * Use this method to define your button->command mappings. Buttons can be created by
-   * instantiating a {@link edu.wpi.first.wpilibj.GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then calling passing it to a
-   * {@link JoystickButton}.
-   */
-  private void configureButtonBindings() {
-    // Drive at half speed when the right bumper is held
-    new JoystickButton(m_driverController, Button.kRightBumper.value)
-        .onTrue(new InstantCommand(() -> m_robotDrive.setMaxOutput(0.5)))
-        .onFalse(new InstantCommand(() -> m_robotDrive.setMaxOutput(1)));
-    new JoystickButton(m_driverController, Button.kA.value)
-        .onTrue(new InstantCommand(() -> m_elevator.lower()))
-        .onFalse(new InstantCommand(() -> m_elevator.stop()));
-    new JoystickButton(m_driverController, Button.kY.value)
-        .onTrue(new InstantCommand(() -> m_elevator.raise()))
-        .onFalse(new InstantCommand(() -> m_elevator.stop()));
+    /**
+     * Use this method to define your button->command mappings. Buttons can be created by
+     * instantiating a {@link edu.wpi.first.wpilibj.GenericHID} or one of its subclasses ({@link
+     * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then calling passing it to a
+     * {@link JoystickButton}.
+     */
+    private void configureButtonBindings() {
     }
 
   /**

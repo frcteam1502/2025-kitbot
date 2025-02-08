@@ -9,6 +9,7 @@ import com.ctre.phoenix6.hardware.Pigeon2;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkMax;
 
+import org.team1502.configuration.annotations.DefaultCommand;
 import org.team1502.configuration.annotations.SubsystemInfo;
 import org.team1502.configuration.factory.RobotConfiguration;
 
@@ -21,9 +22,11 @@ import edu.wpi.first.util.sendable.SendableRegistry;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.commands.DriverCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-@SubsystemInfo(disabled = false)
+@SubsystemInfo(disabled = true)
+@DefaultCommand(command = DriverCommand.class)
 public class DriveSubsystem extends SubsystemBase {
   private final SparkMax m_frontLeft;
   private final RelativeEncoder m_frontLeftEncoder;
