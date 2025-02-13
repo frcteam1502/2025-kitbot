@@ -23,7 +23,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.DriveConstants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-@SubsystemInfo(disabled = false)
+@SubsystemInfo(disabled = true)
 public class DriveSubsystem extends SubsystemBase {
   private final SparkMax m_frontLeft;
   private final RelativeEncoder m_frontLeftEncoder;

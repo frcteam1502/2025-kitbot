@@ -17,6 +17,8 @@ public class Inventory {
     public static class Names {
         public static class Motors {
             public static String Mecanum = "Mecanum Motor";
+            public static String Elevator = "Elevator Motor";
+            public static String Intake = "Coral Intake Motor";
         }
     }
     public static RobotConfiguration Parts(RobotConfiguration config, Consumer<PartFactory>... factories) {
@@ -52,9 +54,30 @@ public class Inventory {
                  .Wheel(8.0)
             )
             .SmartCurrentLimit(40)
+        )
+        .MotorController(Names.Motors.Elevator, Manufacturer.REVRobotics, c->c
+            .Motor(Motor.NEO)
+            .IdleMode(IdleMode.kCoast)
+            .GearBox(g-> g
+                 .Gear("Stage1", 1, 4) 
+                 .Gear("Stage2", 1, 5) 
+                 .Wheel(1.28) //16 tooth gear pitch diameter
+            )
+            .SmartCurrentLimit(40)
+        )
+        .MotorController(Names.Motors.Intake, Manufacturer.REVRobotics, c->c
+            .Motor(Motor.NEO)
+            .IdleMode(IdleMode.kBrake)
+            .GearBox(g-> g
+                 .Gear("Stage1", 1, 3) 
+                 .Wheel(1) //Change this later
+            )
+            .SmartCurrentLimit(80)
         );
     }
 
+
+    
     public static PartFactory Mk4iL3(PartFactory inventory) { return inventory
         .SwerveModule(sm -> sm
             .CANCoder(cc -> cc)

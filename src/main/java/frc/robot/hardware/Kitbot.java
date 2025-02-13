@@ -2,7 +2,9 @@ package frc.robot.hardware;
 
 import org.team1502.configuration.factory.RobotConfiguration;
 
+import frc.robot.subsystems.CoralIntakeSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.ElevatorSubsystem;
 
 public class Kitbot {
 
@@ -43,6 +45,19 @@ public class Kitbot {
                     .CanNumber(14)
                     .Abbreviation("RR"))
             )
+            .Subsystem(ElevatorSubsystem.class, sys->sys
+                .MotorController("Motor", Inventory.Names.Motors.Elevator, c->c
+                    .PDH(1)//Change when connected!!
+                    .CanNumber(3)
+                    .Abbreviation("Elv")))
+            .Subsystem(CoralIntakeSubsystem.class, sys->sys
+                .MotorController("Motor", Inventory.Names.Motors.Intake, c->c
+                    .PDH(17)
+                    .CanNumber(16)
+                    .Abbreviation("CI")))
+            
+            
+            
             // 14 stage 1
             //  3 intake arm
             // 16 algae intake wheels
