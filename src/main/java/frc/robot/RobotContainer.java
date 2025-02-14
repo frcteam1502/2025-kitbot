@@ -19,6 +19,7 @@ import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.ForwardAuto;
+import frc.robot.commands.ForwardAuto;
 import frc.robot.hardware.Kitbot;
 import frc.robot.subsystems.CoralIntakeSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
@@ -132,7 +133,7 @@ public class RobotContainer {
             // Start at the origin facing the +X direction
             Pose2d.kZero,
             // Pass through these two interior waypoints, making an 's' curve path
-            List.of(new Translation2d(1, 1), new Translation2d(2, -1)),
+            List.of(new Translation2d(1, 0), new Translation2d(2, 0)),
             // End 3 meters straight ahead of where we started, facing forward
             new Pose2d(3, 0, Rotation2d.kZero),
             config);

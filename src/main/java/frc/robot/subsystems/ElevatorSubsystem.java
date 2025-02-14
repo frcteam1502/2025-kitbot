@@ -12,16 +12,15 @@ public class ElevatorSubsystem extends SubsystemBase {
         m_motor = robotConfiguration.MotorController("Motor").buildSparkMax();
     }
 
-    public void raise () {
+    public void raise() {
         m_motor.set(0.3);
     }
 
-    public void lower () {
+    public void lower() {
         m_motor.set(-0.3);
     }
 
-    public void stop () {
-        m_motor.set(0);    
-    }   
-
+    public void stop() {
+        m_motor.set(0);
+    }
 }

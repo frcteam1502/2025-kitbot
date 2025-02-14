@@ -5,6 +5,7 @@ import org.team1502.configuration.factory.RobotConfiguration;
 import frc.robot.subsystems.CoralIntakeSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
+import frc.robot.subsystems.ElevatorSubsystem;
 
 public class Kitbot {
 

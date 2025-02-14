@@ -47,7 +47,7 @@ public class Inventory {
     public static void Kitbot(PartFactory inventory) { inventory
         .MotorController(Names.Motors.Mecanum, Manufacturer.REVRobotics, c->c
             .Motor(Motor.NEO)
-            .IdleMode(IdleMode.kCoast)
+            .IdleMode(IdleMode.kBrake)
             .GearBox(g-> g
                  .Gear("Stage1", 14, 50) // 9.13:1
                  .Gear("Stage2", 14, 50) // 12.75:1, 44.11 ft-lbs, 445.18 rpm, 15.54 ft/s
@@ -57,22 +57,13 @@ public class Inventory {
         )
         .MotorController(Names.Motors.Elevator, Manufacturer.REVRobotics, c->c
             .Motor(Motor.NEO)
-            .IdleMode(IdleMode.kCoast)
+            .IdleMode(IdleMode.kBrake)
             .GearBox(g-> g
                  .Gear("Stage1", 1, 4) 
                  .Gear("Stage2", 1, 5) 
-                 .Wheel(1.28) //16 tooth gear pitch diameter
+                 .Wheel(1.28) // 16 tooth gear pitch diameter
             )
             .SmartCurrentLimit(40)
-        )
-        .MotorController(Names.Motors.Intake, Manufacturer.REVRobotics, c->c
-            .Motor(Motor.NEO)
-            .IdleMode(IdleMode.kBrake)
-            .GearBox(g-> g
-                 .Gear("Stage1", 1, 3) 
-                 .Wheel(1) //Change this later
-            )
-            .SmartCurrentLimit(80)
         );
     }
 
