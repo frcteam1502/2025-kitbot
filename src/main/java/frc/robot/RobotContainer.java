@@ -14,11 +14,14 @@ import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
+import edu.wpi.first.wpilibj.simulation.ElevatorSim;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.ForwardAuto;
+import frc.robot.commands.ForwardAuto;
 import frc.robot.hardware.Kitbot;
+import frc.robot.subsystems.CoralIntakeSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -41,6 +44,8 @@ import org.team1502.injection.RobotFactory;
 public class RobotContainer {
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive;
+  private final ElevatorSubsystem m_elevator;
+  private final CoralIntakeSubsystem m_intake;
 
   // The driver's controller
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
@@ -54,21 +59,28 @@ public class RobotContainer {
         robotFactory = RobotFactory.Create(Robot.class, robotConfiguration);
 
         m_robotDrive = robotFactory.getInstance(DriveSubsystem.class);
+        m_elevator = robotFactory.getInstance(ElevatorSubsystem.class);
+        m_intake = robotFactory.getInstance(CoralIntakeSubsystem.class);
         //m_robotDrive.setMaxOutput(0.25);
 
         // Configure the button bindings
         configureButtonBindings();
-    }
+    if (true) return;    }
 
-    /**
-     * Use this method to define your button->command mappings. Buttons can be created by
-     * instantiating a {@link edu.wpi.first.wpilibj.GenericHID} or one of its subclasses ({@link
-     * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then calling passing it to a
-     * {@link JoystickButton}.
-     */
-    private void configureButtonBindings() {
-    }
-
+  /**
+   * Use this method to define your button->command mappings. Buttons can be created by
+   * instantiating a {@link edu.wpi.first.wpilibj.GenericHID} or one of its subclasses ({@link
+   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then calling passing it to a
+   * {@link JoystickButton}.
+   */
+  private void configureButtonBindings() {
+    new JoystickButton(m_driverController, Button.kX.value) 
+    .onTrue(new InstantCommand(() -> m_intake.in()))
+    .onFalse(new InstantCommand(() -> m_intake.stop()));
+new JoystickButton(m_driverController, Button.kY.value) 
+    .onTrue(new InstantCommand(() -> m_intake.out()))
+    .onFalse(new InstantCommand(() -> m_intake.stop()));
+  }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
@@ -77,9 +89,8 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     
     return new ForwardAuto(m_robotDrive);
-}
-
-  public Command getAutonomousCommand1() {
+    }
+    public Command getAutonomousCommand1() {
     // Create config for trajectory
     TrajectoryConfig config =
         new TrajectoryConfig(

@@ -83,7 +83,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    RobotContainer.robotFactory.getInstance(DriveSubsystem.class).resetEncoders();
+    //RobotContainer.robotFactory.getInstance(DriveSubsystem.class).resetEncoders();
   }
 
   /** This function is called periodically during operator control. */

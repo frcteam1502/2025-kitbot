@@ -13,20 +13,19 @@ import frc.robot.commands.OperatorCommand;
 @DefaultCommand(command = OperatorCommand.class)
 public class ElevatorSubsystem extends SubsystemBase {
     final SparkMax m_motor;
-    public ElevatorSubsystem(RobotConfiguration robotConfiguration){
+    public ElevatorSubsystem(RobotConfiguration robotConfiguration) {
         m_motor = robotConfiguration.MotorController("Motor").buildSparkMax();
     }
 
-
-    public void raise(){
+    public void raise() {
         m_motor.set(0.3);
     }
 
-    public void lower(){
-        m_motor.set(-0.3); 
+    public void lower() {
+        m_motor.set(-0.3);
     }
 
-    public void stop(){
+    public void stop() {
         m_motor.set(0);
     }
 }

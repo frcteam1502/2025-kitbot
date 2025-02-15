@@ -18,6 +18,7 @@ public class Inventory {
         public static class Motors {
             public static String Mecanum = "Mecanum Motor";
             public static String Elevator = "Elevator Motor";
+            public static String Intake = "Coral Intake Motor";
         }
     }
     public static RobotConfiguration Parts(RobotConfiguration config, Consumer<PartFactory>... factories) {
@@ -66,8 +67,8 @@ public class Inventory {
         );
     }
 
-    
 
+    
     public static PartFactory Mk4iL3(PartFactory inventory) { return inventory
         .SwerveModule(sm -> sm
             .CANCoder(cc -> cc)
