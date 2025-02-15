@@ -22,11 +22,11 @@ import edu.wpi.first.util.sendable.SendableRegistry;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.DriveConstants;
-import frc.robot.commands.DriverCommand;
+import frc.robot.commands.DriverCommands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 @SubsystemInfo(disabled = false)
-@DefaultCommand(command = DriverCommand.class)
+@DefaultCommand(command = DriverCommands.class)
 public class DriveSubsystem extends SubsystemBase {
   private final SparkMax m_frontLeft;
   private final RelativeEncoder m_frontLeftEncoder;

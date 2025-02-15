@@ -2,6 +2,8 @@ package frc.robot.hardware;
 
 import org.team1502.configuration.factory.RobotConfiguration;
 
+import frc.robot.commands.AlgaeIntakeCommands;
+import frc.robot.subsystems.AlgaeIntakeSubsystem;
 import frc.robot.subsystems.CoralIntakeSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
@@ -55,6 +57,11 @@ public class Kitbot {
                 .MotorController("Motor", Inventory.Names.Motors.Intake, c->c
                     .PDH(17)
                     .CanNumber(16)
+                    .Abbreviation("CI")))
+            .Subsystem(AlgaeIntakeSubsystem.class, sys->sys
+                .MotorController("Motor", Inventory.Names.Motors.Intake, c->c
+                    .PDH(17)
+                    .CanNumber(17)
                     .Abbreviation("CI")))
             
             

@@ -19,6 +19,7 @@ public class Inventory {
             public static String Mecanum = "Mecanum Motor";
             public static String Elevator = "Elevator Motor";
             public static String Intake = "Coral Intake Motor";
+            public static String Algae = "Algae Intake Motor";
         }
     }
     public static RobotConfiguration Parts(RobotConfiguration config, Consumer<PartFactory>... factories) {
@@ -49,7 +50,7 @@ public class Inventory {
             .Motor(Motor.NEO)
             .IdleMode(IdleMode.kBrake)
             .GearBox(g-> g
-                 .Gear("Stage1", 14, 50) // 9.13:1
+                 .Gear("Stage1", 14, 50)
                  .Gear("Stage2", 14, 50) // 12.75:1, 44.11 ft-lbs, 445.18 rpm, 15.54 ft/s
                  .Wheel(8.0)
             )
@@ -64,7 +65,28 @@ public class Inventory {
                  .Wheel(1.28) // 16 tooth gear pitch diameter
             )
             .SmartCurrentLimit(40)
-        );
+        )
+        .MotorController(Names.Motors.Intake, Manufacturer.REVRobotics, c->c
+            .Motor(Motor.NEO)
+            .IdleMode(IdleMode.kBrake)
+            .GearBox(g-> g // TODO: coral motor configuration
+                 .Gear("Stage1", 1, 4) 
+                 .Gear("Stage2", 1, 5) 
+                 .Wheel(1.28) // 16 tooth gear pitch diameter
+            )
+            .SmartCurrentLimit(40)
+        )
+        .MotorController(Names.Motors.Algae, Manufacturer.REVRobotics, c->c
+            .Motor(Motor.NEO)
+            .IdleMode(IdleMode.kBrake)
+            .GearBox(g-> g // TODO: algae motor configuration
+                 .Gear("Stage1", 1, 4) 
+                 .Gear("Stage2", 1, 5) 
+                 .Wheel(1.28)
+            )
+            .SmartCurrentLimit(40)
+        )
+        ;
     }
 
 

@@ -2,13 +2,13 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import frc.robot.subsystems.CoralIntakeSubsystem;
+import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.team1502.Operator;
 
-public class CoralIntakeCommands extends Command {
-    private final CoralIntakeSubsystem m_subsystem;
+public class ElevatorCommands extends Command {
+    private final ElevatorSubsystem m_subsystem;
     
-    public CoralIntakeCommands(CoralIntakeSubsystem subsystem) {
+    public ElevatorCommands(ElevatorSubsystem subsystem) {
         m_subsystem = subsystem;
         addRequirements(m_subsystem);
     }
@@ -17,11 +17,11 @@ public class CoralIntakeCommands extends Command {
     public void initialize(){
         //m_subsystem.reset();
 
-        Operator.X
-            .onTrue(new InstantCommand(() -> m_subsystem.in()))
+        Operator.A
+            .onTrue(new InstantCommand(() -> m_subsystem.lower()))
             .onFalse(new InstantCommand(() -> m_subsystem.stop()));
-        Operator.B
-            .onTrue(new InstantCommand(() -> m_subsystem.out()))
+        Operator.Y
+            .onTrue(new InstantCommand(() -> m_subsystem.raise()))
             .onFalse(new InstantCommand(() -> m_subsystem.stop()));
 
     }
@@ -29,5 +29,5 @@ public class CoralIntakeCommands extends Command {
     @Override
     public void execute(){
     }
-    
+
 }
