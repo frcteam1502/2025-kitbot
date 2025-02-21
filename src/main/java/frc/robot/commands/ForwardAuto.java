@@ -22,16 +22,16 @@ public class ForwardAuto extends Command {
         var pose = m_DriveSubsystem.getPose();
         var distance = pose.getX();
         if (distance <= 3){
-            m_DriveSubsystem.setDriveMotorControllersVolts(0.3, 0.3, 0.3, 0.3);
+            m_DriveSubsystem.drive(0.3, 0, 0, false);
             
         } else {
-            m_DriveSubsystem.setDriveMotorControllersVolts(0, 0, 0, 0);
+            m_DriveSubsystem.drive(0, 0, 0, false);
         }
     }
 
     @Override 
     public void end(boolean interrupted) {
-        m_DriveSubsystem.setDriveMotorControllersVolts(0, 0, 0, 0);
+        m_DriveSubsystem.drive(0, 0, 0, false);
         m_DriveSubsystem.resetOdometry(new Pose2d());
         m_DriveSubsystem.resetEncoders();
     }

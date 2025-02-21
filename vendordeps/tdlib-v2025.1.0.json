@@ -8,9 +8,9 @@
     "jsonUrl": "",
     "javaDependencies": [
       {
-        "groupId": "org.team1502",
-        "artifactId": "tdLib",
-        "version": "v2025.1.0"
+        "groupId": "org.semrobotics.frcteam1502",
+        "artifactId": "tdLib-java",
+        "version": "v2025.2.0"
       }
     ],
     "jniDependencies": [],
