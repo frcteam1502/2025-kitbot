@@ -96,6 +96,24 @@ public class Inventory {
             )
             .SmartCurrentLimit(40)
         )
+        .MotorController(Names.Motors.CoralRotate, Manufacturer.REVRobotics, c->c
+            .IdleMode(IdleMode.kBrake)
+            .GearBox(g-> g 
+                 .Gear("Stage1", 1, 4) 
+                 .Gear("Stage2", 1, 5) 
+                 .Wheel(Inches.of(4)) 
+            )
+            .SmartCurrentLimit(40)
+        )
+        .MotorController(Names.Motors.AlgaeWheels, Manufacturer.REVRobotics, c->c
+            .Motor(Motor.NEO)
+            .IdleMode(IdleMode.kBrake)
+            .GearBox(g-> g // TODO: algae motor configuration
+                 .Gear("Stage1", 1, 3)
+                 .Wheel(Inches.of(1.22))
+            )
+            .SmartCurrentLimit(40)
+        )
         .MotorController(Names.Motors.AlgaeRotate, Manufacturer.REVRobotics, c->c
             .Motor(Motor.NEO)
             .IdleMode(IdleMode.kBrake)
