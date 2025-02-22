@@ -1,14 +1,27 @@
 package frc.robot.hardware;
 
-import org.team1502.configuration.factory.RobotConfiguration;
+import static edu.wpi.first.units.Units.Inches;
+import static edu.wpi.first.units.Units.Meters;
+import static edu.wpi.first.units.Units.MetersPerSecond;
+import static edu.wpi.first.units.Units.MetersPerSecondPerSecond;
 
-import frc.robot.commands.AlgaeIntakeCommands;
+import org.team1502.configuration.factory.RobotConfiguration;
+import org.team1502.injection.RobotFactory;
+import org.team1502.drivers.MecanumDriver;
+
+import frc.robot.Robot;
 import frc.robot.subsystems.AlgaeIntakeSubsystem;
 import frc.robot.subsystems.CoralIntakeSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 
 public class Kitbot {
+    public static RobotFactory Create() {
+        return Create(buildRobot());
+    }
+    public static RobotFactory Create(RobotConfiguration config) {
+        return RobotFactory.Create(Robot.class, config);
+    }
 
     @SuppressWarnings("unchecked")
     public static RobotConfiguration buildRobot() {
@@ -28,24 +41,36 @@ public class Kitbot {
             .Subsystem(DriveSubsystem.class, sys->sys
                 .Pigeon2(g->g
                     .CanNumber(14))
-                .MotorController("Front Left", Inventory.Names.Motors.Mecanum, c->c
-                    .PDH(1)
-                    .CanNumber(3)
-                    .Abbreviation("FL"))
-                .MotorController("Front Right", Inventory.Names.Motors.Mecanum, c->c
-                    .Reversed()
-                    .PDH(0)
-                    .CanNumber(5)
-                    .Abbreviation("FR"))
-                .MotorController("Rear Left", Inventory.Names.Motors.Mecanum, c->c
-                    .PDH(18)
-                    .CanNumber(4)
-                    .Abbreviation("RL"))
-                .MotorController("Rear Right", Inventory.Names.Motors.Mecanum, c->c
-                    .Reversed()
-                    .PDH(19)
-                    .CanNumber(14)
-                    .Abbreviation("RR"))
+
+                .MecanumDrive(m->m
+                    .Chassis(c->c.Rectangular(Meters.of(.5), Meters.of(.517)))
+                
+                    .MotorController("Front Left", Inventory.Names.Motors.Mecanum, c->c
+                        .PDH(1)
+                        .CanNumber(3)
+                        .Abbreviation("FL"))
+                    .MotorController("Front Right", Inventory.Names.Motors.Mecanum, c->c
+                        .Reversed()
+                        .PDH(0)
+                        .CanNumber(5)
+                        .Abbreviation("FR"))
+                    .MotorController("Rear Left", Inventory.Names.Motors.Mecanum, c->c
+                        .PDH(18)
+                        .CanNumber(4)
+                        .Abbreviation("RL"))
+                    .MotorController("Rear Right", Inventory.Names.Motors.Mecanum, c->c
+                        .Reversed()
+                        .PDH(19)
+                        .CanNumber(14)
+                        .Abbreviation("RR"))
+                    // MecanumComtroller Command Information
+                    .TrajectoryConfig(MetersPerSecond.of(1.0), MetersPerSecondPerSecond.of(3.0))
+                    .PIDController(MecanumDriver.XController, p->p.Gain(0.5, 0.0, 0.0))
+                    .PIDController(MecanumDriver.YController, p->p.Gain(0.5, 0.0, 0.0))
+                    .PIDController(MecanumDriver.ThetaController, p->p
+                        .Gain(0.5, 0.0, 0.0)
+                        .Constraints(Math.PI, Math.PI))
+                )
             )
             .Subsystem(ElevatorSubsystem.class, sys->sys
                 .MotorController("Motor", Inventory.Names.Motors.Elevator, c->c

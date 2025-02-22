@@ -1,5 +1,7 @@
 package frc.robot.hardware;
 
+import static edu.wpi.first.units.Units.Inches;
+
 import java.util.Arrays;
 import java.util.function.Consumer;
 
@@ -10,8 +12,6 @@ import org.team1502.configuration.factory.RobotConfiguration;
 
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
-
-import edu.wpi.first.math.util.Units;
 
 public class Inventory {
     public static class Names {
@@ -54,7 +54,7 @@ public class Inventory {
             .GearBox(g-> g
                  .Gear("Stage1", 14, 50)
                  .Gear("Stage2", 14, 50) // 12.75:1, 44.11 ft-lbs, 445.18 rpm, 15.54 ft/s
-                 .Wheel(8.0)
+                 .Wheel(Inches.of(8.0))
             )
             .SmartCurrentLimit(40)
         )
@@ -64,7 +64,7 @@ public class Inventory {
             .GearBox(g-> g
                  .Gear("Stage1", 1, 5) 
                  .Gear("Stage2", 1, 5) 
-                 .Wheel(1.28) // 16 tooth gear pitch diameter
+                 .Wheel(Inches.of(1.28)) // 16 tooth gear pitch diameter
             )
             .SmartCurrentLimit(40)
         )
@@ -74,7 +74,7 @@ public class Inventory {
             .GearBox(g-> g // TODO: coral motor configuration
                  .Gear("Stage1", 1, 4) 
                  .Gear("Stage2", 1, 5) 
-                 .Wheel(1.28) // 16 tooth gear pitch diameter
+                 .Wheel(Inches.of(1.28)) // 16 tooth gear pitch diameter
             )
             .SmartCurrentLimit(40)
         )
@@ -83,7 +83,7 @@ public class Inventory {
             .GearBox(g-> g 
                  .Gear("Stage1", 1, 4) 
                  .Gear("Stage2", 1, 5) 
-                 .Wheel(4) 
+                 .Wheel(Inches.of(4)) 
             )
             .SmartCurrentLimit(40)
         )
@@ -92,7 +92,25 @@ public class Inventory {
             .IdleMode(IdleMode.kBrake)
             .GearBox(g-> g // TODO: algae motor configuration
                  .Gear("Stage1", 1, 3)
-                 .Wheel(1.22)
+                 .Wheel(Inches.of(1.22))
+            )
+            .SmartCurrentLimit(40)
+        )
+        .MotorController(Names.Motors.CoralRotate, Manufacturer.REVRobotics, c->c
+            .IdleMode(IdleMode.kBrake)
+            .GearBox(g-> g 
+                 .Gear("Stage1", 1, 4) 
+                 .Gear("Stage2", 1, 5) 
+                 .Wheel(Inches.of(4)) 
+            )
+            .SmartCurrentLimit(40)
+        )
+        .MotorController(Names.Motors.AlgaeWheels, Manufacturer.REVRobotics, c->c
+            .Motor(Motor.NEO)
+            .IdleMode(IdleMode.kBrake)
+            .GearBox(g-> g // TODO: algae motor configuration
+                 .Gear("Stage1", 1, 3)
+                 .Wheel(Inches.of(1.22))
             )
             .SmartCurrentLimit(40)
         )
@@ -103,7 +121,7 @@ public class Inventory {
                  .Gear("Stage1", 1, 5) 
                  .Gear("Stage2", 1, 3) 
                  .Gear("Stage3", 1, 3) 
-                 .Wheel(3.08)
+                 .Wheel(Inches.of(3.08))
             )
             .SmartCurrentLimit(40)
         )
@@ -136,7 +154,7 @@ public class Inventory {
                     .Gear("Stage1", 14, 50)
                     .Gear("Stage2", 28, 16)
                     .Gear("Stage3", 15, 45)
-                    .Wheel(4.0)
+                    .Wheel(Inches.of(4.0))
                 )
                 .PID(.0005, 0.0, 0.0, 1.0)
                 .ClosedLoopRampRate(.5)
