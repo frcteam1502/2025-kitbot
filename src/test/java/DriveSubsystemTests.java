@@ -1,4 +1,4 @@
-package frc.robot.subsystems;
+
 
 import com.revrobotics.spark.*;
 import edu.wpi.first.hal.HAL;
@@ -15,12 +15,13 @@ import org.team1502.drivers.MecanumDriver;
 import org.team1502.injection.RobotFactory;
 
 import frc.robot.hardware.Kitbot;
+import frc.robot.subsystems.DriveSubsystem;
 
 public class DriveSubsystemTests {
 
     RobotConfiguration m_robotConfiguration;
     DriveSubsystem m_driveSubsystem;
-    MecanumDriver m_driver;
+    //MecanumDriver m_driver;
     SparkMax[] m_modules;
 
     static Angle gyroAngle = Units.Degrees.of(0);
@@ -32,10 +33,10 @@ public class DriveSubsystemTests {
     void setup() {
         assert HAL.initialize(500, 0); // initialize the HAL, crash if failed
         m_robotConfiguration = Kitbot.buildRobot();
-        RobotFactory factory = RobotFactory.Create(DriveSubsystem.class, m_robotConfiguration);
+        RobotFactory factory = Kitbot.Create(m_robotConfiguration);
         m_driveSubsystem = factory.getInstance(DriveSubsystem.class);
         m_driveSubsystem.m_gyroYaw = ()->getAngle();
-        m_driver = m_driveSubsystem.m_drive;
+        //m_driver = m_driveSubsystem.m_drive;
         m_modules = m_robotConfiguration.MecanumDrive().getModules()
             .stream()
             .map(mcb->(SparkMax)mcb.CANSparkMax())
@@ -59,7 +60,7 @@ public class DriveSubsystemTests {
         System.out.println();
     }
 
-    @Test
+    @Test //Factory is looking in the wrong frc\robot\subsystems and only finding this class, no subsystems
     public void DriveTest1() {
         m_driveSubsystem.drive(0.75, 0.0, 0.25, false);
         dumpModules("Robot-Rotate Clockwise");

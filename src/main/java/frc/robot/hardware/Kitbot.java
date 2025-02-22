@@ -5,15 +5,22 @@ import static edu.wpi.first.units.Units.MetersPerSecond;
 import static edu.wpi.first.units.Units.MetersPerSecondPerSecond;
 
 import org.team1502.configuration.factory.RobotConfiguration;
+import org.team1502.injection.RobotFactory;
 import org.team1502.drivers.MecanumDriver;
 
-import frc.robot.commands.AlgaeIntakeCommands;
+import frc.robot.Robot;
 import frc.robot.subsystems.AlgaeIntakeSubsystem;
 import frc.robot.subsystems.CoralIntakeSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 
 public class Kitbot {
+    public static RobotFactory Create() {
+        return Create(buildRobot());
+    }
+    public static RobotFactory Create(RobotConfiguration config) {
+        return RobotFactory.Create(Robot.class, config);
+    }
 
     @SuppressWarnings("unchecked")
     public static RobotConfiguration buildRobot() {

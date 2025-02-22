@@ -3,14 +3,6 @@ plugins {
     id "edu.wpi.first.GradleRIO" version "2025.2.1"
 }
 
-repositories {
-  maven {
-    name 'tdLib' // to refresh: ./gradlew build --refresh-dependencies
-    url  "C:\\Users\\jonat\\source\\frcteam\\libraries\\tdlib\\build\\repo\\releases"
-  }
-
-}
-
 java {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
