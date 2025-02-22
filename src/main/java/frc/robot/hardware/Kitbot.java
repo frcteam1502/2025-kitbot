@@ -86,15 +86,16 @@ public class Kitbot {
                     .CanNumber(16)
                     .Abbreviation("CR")))
             .Subsystem(AlgaeIntakeSubsystem.class, sys->sys
-                .MotorController("Intake", Inventory.Names.Motors.AlgaeWheels, c->c
+                .MotorController("Wheels", Inventory.Names.Motors.AlgaeWheels, c->c
                     .PDH(17)
-                    .CanNumber(17)
+                    .CanNumber(16)
                     .Abbreviation("AW"))
                 .MotorController("Rotate", Inventory.Names.Motors.AlgaeRotate, c->c
                     .PDH(17)
-                    .CanNumber(17)
+                    .CanNumber(16)
                     .Abbreviation("AR")))
             
+        ));
             
             
             // 14 stage 1
@@ -102,7 +103,7 @@ public class Kitbot {
             // 16 algae intake wheels
             // 15 algae intake lift
 
-        ));
+        
     }
 
 }
