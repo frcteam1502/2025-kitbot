@@ -1,6 +1,7 @@
 package frc.robot.hardware;
 
 import static edu.wpi.first.units.Units.Inches;
+import static edu.wpi.first.units.Units.Meters;
 import static edu.wpi.first.units.Units.MetersPerSecond;
 import static edu.wpi.first.units.Units.MetersPerSecondPerSecond;
 
@@ -42,7 +43,7 @@ public class Kitbot {
                     .CanNumber(14))
 
                 .MecanumDrive(m->m
-                    .Chassis(c->c.Rectangular(Inches.of(6), Inches.of(8)))
+                    .Chassis(c->c.Rectangular(Meters.of(.5), Meters.of(.517)))
                 
                     .MotorController("Front Left", Inventory.Names.Motors.Mecanum, c->c
                         .PDH(1)
