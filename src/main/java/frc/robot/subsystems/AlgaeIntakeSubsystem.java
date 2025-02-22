@@ -6,7 +6,7 @@ import org.team1502.configuration.annotations.SubsystemInfo;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.commands.AlgaeIntakeCommands;
 
-@SubsystemInfo(disabled = false)
+@SubsystemInfo(disabled = true)
 @DefaultCommand(command = AlgaeIntakeCommands.class)
 public class AlgaeIntakeSubsystem extends SubsystemBase {
     
