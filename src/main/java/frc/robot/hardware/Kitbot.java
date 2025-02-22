@@ -77,15 +77,23 @@ public class Kitbot {
                     .CanNumber(3)
                     .Abbreviation("Elv")))
             .Subsystem(CoralIntakeSubsystem.class, sys->sys
-                .MotorController("Motor", Inventory.Names.Motors.Intake, c->c
+                .MotorController("Intake", Inventory.Names.Motors.CoralIntake, c->c
                     .PDH(17)
                     .CanNumber(16)
-                    .Abbreviation("CI")))
-            .Subsystem(AlgaeIntakeSubsystem.class, sys->sys
-                .MotorController("Motor", Inventory.Names.Motors.Intake, c->c
+                    .Abbreviation("CI"))
+                .MotorController("Rotate", Inventory.Names.Motors.CoralRotate, c->c
                     .PDH(17)
-                    .CanNumber(15)
-                    .Abbreviation("CI")))
+                    .CanNumber(16)
+                    .Abbreviation("CR")))
+            .Subsystem(AlgaeIntakeSubsystem.class, sys->sys
+                .MotorController("Intake", Inventory.Names.Motors.AlgaeWheels, c->c
+                    .PDH(17)
+                    .CanNumber(17)
+                    .Abbreviation("AW"))
+                .MotorController("Rotate", Inventory.Names.Motors.AlgaeRotate, c->c
+                    .PDH(17)
+                    .CanNumber(17)
+                    .Abbreviation("AR")))
             
             
             

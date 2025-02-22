@@ -18,8 +18,10 @@ public class Inventory {
         public static class Motors {
             public static String Mecanum = "Mecanum Motor";
             public static String Elevator = "Elevator Motor";
-            public static String Intake = "Coral Intake Motor";
-            public static String Algae = "Algae Intake Motor";
+            public static String CoralIntake = "Coral Intake Motor";
+            public static String CoralRotate = "Coral Rotate Motor";
+            public static String AlgaeWheels = "Algae Wheels Motor";
+            public static String AlgaeRotate = "Algae Rotate Motor";
         }
     }
     public static RobotConfiguration Parts(RobotConfiguration config, Consumer<PartFactory>... factories) {
@@ -57,16 +59,16 @@ public class Inventory {
             .SmartCurrentLimit(40)
         )
         .MotorController(Names.Motors.Elevator, Manufacturer.REVRobotics, c->c
-            .Motor(Motor.NEO)
+            .Motor(Motor.VORTEX)
             .IdleMode(IdleMode.kBrake)
             .GearBox(g-> g
-                 .Gear("Stage1", 1, 4) 
+                 .Gear("Stage1", 1, 5) 
                  .Gear("Stage2", 1, 5) 
                  .Wheel(Inches.of(1.28)) // 16 tooth gear pitch diameter
             )
             .SmartCurrentLimit(40)
         )
-        .MotorController(Names.Motors.Intake, Manufacturer.REVRobotics, c->c
+        .MotorController(Names.Motors.CoralIntake, Manufacturer.REVRobotics, c->c
             .Motor(Motor.NEO)
             .IdleMode(IdleMode.kBrake)
             .GearBox(g-> g // TODO: coral motor configuration
@@ -76,13 +78,32 @@ public class Inventory {
             )
             .SmartCurrentLimit(40)
         )
-        .MotorController(Names.Motors.Algae, Manufacturer.REVRobotics, c->c
+        .MotorController(Names.Motors.CoralRotate, Manufacturer.REVRobotics, c->c
+            .IdleMode(IdleMode.kBrake)
+            .GearBox(g-> g 
+                 .Gear("Stage1", 1, 4) 
+                 .Gear("Stage2", 1, 5) 
+                 .Wheel(Inches.of(4)) 
+            )
+            .SmartCurrentLimit(40)
+        )
+        .MotorController(Names.Motors.AlgaeWheels, Manufacturer.REVRobotics, c->c
             .Motor(Motor.NEO)
             .IdleMode(IdleMode.kBrake)
             .GearBox(g-> g // TODO: algae motor configuration
-                 .Gear("Stage1", 1, 4) 
-                 .Gear("Stage2", 1, 5) 
-                 .Wheel(Inches.of(1.28))
+                 .Gear("Stage1", 1, 3)
+                 .Wheel(Inches.of(1.22))
+            )
+            .SmartCurrentLimit(40)
+        )
+        .MotorController(Names.Motors.AlgaeRotate, Manufacturer.REVRobotics, c->c
+            .Motor(Motor.NEO)
+            .IdleMode(IdleMode.kBrake)
+            .GearBox(g-> g // TODO: algae motor configuration
+                 .Gear("Stage1", 1, 5) 
+                 .Gear("Stage2", 1, 3) 
+                 .Gear("Stage3", 1, 3) 
+                 .Wheel(Inches.of(3.08))
             )
             .SmartCurrentLimit(40)
         )
