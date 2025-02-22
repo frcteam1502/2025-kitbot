@@ -1,4 +1,4 @@
-package robot.subsystems;
+package frc.robot.subsystems;
 
 import com.revrobotics.spark.*;
 import edu.wpi.first.hal.HAL;
@@ -7,20 +7,14 @@ import edu.wpi.first.units.measure.Angle;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.lang.reflect.Field;
-import java.util.List;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.team1502.configuration.builders.motors.MotorControllerBuilder;
-import org.team1502.configuration.factory.Evaluator;
 import org.team1502.configuration.factory.RobotConfiguration;
 import org.team1502.drivers.MecanumDriver;
 import org.team1502.injection.RobotFactory;
 
 import frc.robot.hardware.Kitbot;
-import frc.robot.subsystems.DriveSubsystem;
 
 public class DriveSubsystemTests {
 
@@ -43,7 +37,8 @@ public class DriveSubsystemTests {
         m_driveSubsystem.m_gyroYaw = ()->getAngle();
         m_driver = m_driveSubsystem.m_drive;
         m_modules = m_robotConfiguration.MecanumDrive().getModules()
-            .stream().map(mcb->(SparkMax)mcb.CANSparkMax())
+            .stream()
+            .map(mcb->(SparkMax)mcb.CANSparkMax())
             .toArray(SparkMax[]::new);
 
     }

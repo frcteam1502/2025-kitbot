@@ -32,7 +32,7 @@ public class DriveSubsystem extends SubsystemBase {
     /** generic Rotation2d in radians */
     public /* final */ Supplier<Rotation2d> m_gyroRotation2d;
 
-    public final MecanumDriver m_drive;
+    final MecanumDriver m_drive;
     final RobotConfiguration m_robotConfiguration;
 
     /** Creates a new DriveSubsystem. */
