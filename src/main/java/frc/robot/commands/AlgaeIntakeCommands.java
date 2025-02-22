@@ -18,14 +18,20 @@ public class AlgaeIntakeCommands extends Command {
         //m_subsystem.reset();
 
         // TODO: Algae buttons and commands
-        /*
-        Operator.X
+        
+        Operator.RightBumper
             .onTrue(new InstantCommand(() -> m_subsystem.in()))
             .onFalse(new InstantCommand(() -> m_subsystem.stop()));
-        Operator.Y
+        Operator.LeftBumper
             .onTrue(new InstantCommand(() -> m_subsystem.out()))
             .onFalse(new InstantCommand(() -> m_subsystem.stop()));
-         */
+        Operator.East
+            .onTrue(new InstantCommand(() -> m_subsystem.down()))
+            .onFalse(new InstantCommand(() -> m_subsystem.stay()));
+        Operator.West
+            .onTrue(new InstantCommand(() -> m_subsystem.up()))
+            .onFalse(new InstantCommand(() -> m_subsystem.stay()));
+         
 
     }
 
