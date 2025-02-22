@@ -49,25 +49,25 @@ public class Kitbot {
             )
             .Subsystem(ElevatorSubsystem.class, sys->sys
                 .MotorController("Motor", Inventory.Names.Motors.Elevator, c->c
-                    .PDH(1)//Change when connected!!
-                    .CanNumber(3)
+                    .PDH(17)//Change when connected!!
+                    .CanNumber(6)
                     .Abbreviation("Elv")))
             .Subsystem(CoralIntakeSubsystem.class, sys->sys
                 .MotorController("Intake", Inventory.Names.Motors.CoralIntake, c->c
-                    .PDH(17)
-                    .CanNumber(16)
+                    .PDH(15)
+                    .CanNumber(15)
                     .Abbreviation("CI"))
                 .MotorController("Rotate", Inventory.Names.Motors.CoralRotate, c->c
-                    .PDH(17)
+                    .PDH(16)
                     .CanNumber(16)
                     .Abbreviation("CR")))
             .Subsystem(AlgaeIntakeSubsystem.class, sys->sys
                 .MotorController("Wheels", Inventory.Names.Motors.AlgaeWheels, c->c
-                    .PDH(17)
+                    .PDH(20)
                     .CanNumber(16)
                     .Abbreviation("AW"))
                 .MotorController("Rotate", Inventory.Names.Motors.AlgaeRotate, c->c
-                    .PDH(17)
+                    .PDH(20)
                     .CanNumber(16)
                     .Abbreviation("AR")))
             
