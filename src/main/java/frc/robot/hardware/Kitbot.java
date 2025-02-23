@@ -71,13 +71,13 @@ public class Kitbot {
                         .Gain(0.5, 0.0, 0.0)
                         .Constraints(Math.PI, Math.PI))
                 )
-            )
-            .Subsystem(ElevatorSubsystem.class, sys->sys
+            
+            .Subsystem(ElevatorSubsystem.class, elevatorSys->elevatorSys
                 .MotorController("Motor", Inventory.Names.Motors.Elevator, c->c
                     .PDH(17)//Change when connected!!
                     .CanNumber(6)
                     .Abbreviation("Elv")))
-            .Subsystem(CoralIntakeSubsystem.class, sys->sys
+            .Subsystem(CoralIntakeSubsystem.class, coralSys->coralSys
                 .MotorController("CoralIntake", Inventory.Names.Motors.CoralIntake, c->c
                     .PDH(15)
                     .CanNumber(15)
@@ -86,7 +86,7 @@ public class Kitbot {
                     .PDH(16)
                     .CanNumber(16)
                     .Abbreviation("CR")))
-            .Subsystem(AlgaeIntakeSubsystem.class, sys->sys
+            .Subsystem(AlgaeIntakeSubsystem.class, algaeSys -> algaeSys
                 .MotorController("Wheels", Inventory.Names.Motors.AlgaeWheels, c->c
                     .PDH(20)
                     .CanNumber(16)
@@ -96,7 +96,7 @@ public class Kitbot {
                     .CanNumber(16)
                     .Abbreviation("AR")))
             
-        ));
+        )));
             
             
             // 14 stage 1
