@@ -78,11 +78,11 @@ public class Kitbot {
                     .CanNumber(6)
                     .Abbreviation("Elv")))
             .Subsystem(CoralIntakeSubsystem.class, sys->sys
-                .MotorController("Intake", Inventory.Names.Motors.CoralIntake, c->c
+                .MotorController("CoralIntake", Inventory.Names.Motors.CoralIntake, c->c
                     .PDH(15)
                     .CanNumber(15)
                     .Abbreviation("CI"))
-                .MotorController("Rotate", Inventory.Names.Motors.CoralRotate, c->c
+                .MotorController("CoralRotate", Inventory.Names.Motors.CoralRotate, c->c
                     .PDH(16)
                     .CanNumber(16)
                     .Abbreviation("CR")))
