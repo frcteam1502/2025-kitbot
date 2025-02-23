@@ -10,7 +10,7 @@ import com.revrobotics.spark.SparkBase.ControlType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.commands.ElevatorCommands;
 
-@SubsystemInfo(disabled = false)
+@SubsystemInfo(disabled = true)
 @DefaultCommand(command = ElevatorCommands.class)
 public class ElevatorSubsystem extends SubsystemBase {
     final SparkMax m_motor;
