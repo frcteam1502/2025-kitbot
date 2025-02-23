@@ -57,6 +57,7 @@ public class Inventory {
                  .Wheel(Inches.of(8.0))
             )
             .SmartCurrentLimit(40)
+            // TODO: velocity PID controllers for autonomous
         )
         .MotorController(Names.Motors.Elevator, Manufacturer.REVRobotics, c->c
             .Motor(Motor.VORTEX)
@@ -71,7 +72,7 @@ public class Inventory {
         .MotorController(Names.Motors.CoralIntake, Manufacturer.REVRobotics, c->c
             .Motor(Motor.NEO)
             .IdleMode(IdleMode.kBrake)
-            .GearBox(g-> g // TODO: coral motor configuration
+            .GearBox(g-> g
                  .Gear("Stage1", 1, 4) 
                  .Gear("Stage2", 1, 5) 
                  .Wheel(Inches.of(1.28)) // 16 tooth gear pitch diameter
@@ -79,6 +80,7 @@ public class Inventory {
             .SmartCurrentLimit(40)
         )
         .MotorController(Names.Motors.CoralRotate, Manufacturer.REVRobotics, c->c
+            .Motor(Motor.NEO)
             .IdleMode(IdleMode.kBrake)
             .GearBox(g-> g 
                  .Gear("Stage1", 1, 4) 
@@ -90,25 +92,7 @@ public class Inventory {
         .MotorController(Names.Motors.AlgaeWheels, Manufacturer.REVRobotics, c->c
             .Motor(Motor.NEO)
             .IdleMode(IdleMode.kBrake)
-            .GearBox(g-> g // TODO: algae motor configuration
-                 .Gear("Stage1", 1, 3)
-                 .Wheel(Inches.of(1.22))
-            )
-            .SmartCurrentLimit(40)
-        )
-        .MotorController(Names.Motors.CoralRotate, Manufacturer.REVRobotics, c->c
-            .IdleMode(IdleMode.kBrake)
-            .GearBox(g-> g 
-                 .Gear("Stage1", 1, 4) 
-                 .Gear("Stage2", 1, 5) 
-                 .Wheel(Inches.of(4)) 
-            )
-            .SmartCurrentLimit(40)
-        )
-        .MotorController(Names.Motors.AlgaeWheels, Manufacturer.REVRobotics, c->c
-            .Motor(Motor.NEO)
-            .IdleMode(IdleMode.kBrake)
-            .GearBox(g-> g // TODO: algae motor configuration
+            .GearBox(g-> g
                  .Gear("Stage1", 1, 3)
                  .Wheel(Inches.of(1.22))
             )
@@ -117,7 +101,7 @@ public class Inventory {
         .MotorController(Names.Motors.AlgaeRotate, Manufacturer.REVRobotics, c->c
             .Motor(Motor.NEO)
             .IdleMode(IdleMode.kBrake)
-            .GearBox(g-> g // TODO: algae motor configuration
+            .GearBox(g-> g
                  .Gear("Stage1", 1, 5) 
                  .Gear("Stage2", 1, 3) 
                  .Gear("Stage3", 1, 3) 
