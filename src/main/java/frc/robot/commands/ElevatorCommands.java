@@ -17,10 +17,10 @@ public class ElevatorCommands extends Command {
     public void initialize(){
         //m_subsystem.reset();
 
-        Operator.A
+        Operator.South
             .onTrue(new InstantCommand(() -> m_subsystem.lower()))
             .onFalse(new InstantCommand(() -> m_subsystem.stop()));
-        Operator.Y
+        Operator.North
             .onTrue(new InstantCommand(() -> m_subsystem.raise()))
             .onFalse(new InstantCommand(() -> m_subsystem.stop()));
 

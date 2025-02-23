@@ -37,8 +37,8 @@ public final class Operator {
   // Action Buttons
   public static final Trigger A = Controller.a(); 
   public static final Trigger B = Controller.b(); 
-  public static final Trigger X = Controller.b(); 
-  public static final Trigger Y = Controller.b(); 
+  public static final Trigger X = Controller.x(); 
+  public static final Trigger Y = Controller.y(); 
   
   // Other buttons
   public static final Trigger Back = Controller.back();
