@@ -11,17 +11,16 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.team1502.configuration.factory.RobotConfiguration;
-import org.team1502.drivers.MecanumDriver;
 import org.team1502.injection.RobotFactory;
 
 import frc.robot.hardware.Kitbot;
+import frc.robot.subsystems.*;
 import frc.robot.subsystems.DriveSubsystem;
 
 public class DriveSubsystemTests {
 
     RobotConfiguration m_robotConfiguration;
     DriveSubsystem m_driveSubsystem;
-    //MecanumDriver m_driver;
     SparkMax[] m_modules;
 
     static Angle gyroAngle = Units.Degrees.of(0);
@@ -33,10 +32,14 @@ public class DriveSubsystemTests {
     void setup() {
         assert HAL.initialize(500, 0); // initialize the HAL, crash if failed
         m_robotConfiguration = Kitbot.buildRobot();
+        // TODO: disable-all except e.g., DriveSubsystem function needed
+        m_robotConfiguration.DisableSubsystem(ElevatorSubsystem.class);
+        m_robotConfiguration.DisableSubsystem(CoralIntakeSubsystem.class);
+        m_robotConfiguration.DisableSubsystem(AlgaeIntakeSubsystem.class);
+
         RobotFactory factory = Kitbot.Create(m_robotConfiguration);
         m_driveSubsystem = factory.getInstance(DriveSubsystem.class);
         m_driveSubsystem.m_gyroYaw = ()->getAngle();
-        //m_driver = m_driveSubsystem.m_drive;
         m_modules = m_robotConfiguration.MecanumDrive().getModules()
             .stream()
             .map(mcb->(SparkMax)mcb.CANSparkMax())

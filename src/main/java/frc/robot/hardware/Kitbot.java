@@ -46,21 +46,21 @@ public class Kitbot {
                     .Chassis(c->c.Rectangular(Meters.of(.5), Meters.of(.517)))
                 
                     .MotorController("Front Left", Inventory.Names.Motors.Mecanum, c->c
-                        .PDH(1)
+                        .PDH(19)
                         .CanNumber(3)
                         .Abbreviation("FL"))
                     .MotorController("Front Right", Inventory.Names.Motors.Mecanum, c->c
                         .Reversed()
-                        .PDH(0)
+                        .PDH(18)
                         .CanNumber(5)
                         .Abbreviation("FR"))
                     .MotorController("Rear Left", Inventory.Names.Motors.Mecanum, c->c
-                        .PDH(18)
+                        .PDH(1)
                         .CanNumber(4)
                         .Abbreviation("RL"))
                     .MotorController("Rear Right", Inventory.Names.Motors.Mecanum, c->c
                         .Reversed()
-                        .PDH(19)
+                        .PDH(0)
                         .CanNumber(14)
                         .Abbreviation("RR"))
                     // MecanumComtroller Command Information
@@ -75,12 +75,12 @@ public class Kitbot {
             .Subsystem(ElevatorSubsystem.class, sys->sys
                 .MotorController("Motor", Inventory.Names.Motors.Elevator, c->c
                     .PDH(1)//Change when connected!!
-                    .CanNumber(3)
+                    .CanNumber(6)
                     .Abbreviation("Elv")))
             .Subsystem(CoralIntakeSubsystem.class, sys->sys
                 .MotorController("Intake", Inventory.Names.Motors.CoralIntake, c->c
                     .PDH(17)
-                    .CanNumber(16)
+                    .CanNumber(15)
                     .Abbreviation("CI"))
                 .MotorController("Rotate", Inventory.Names.Motors.CoralRotate, c->c
                     .PDH(17)
