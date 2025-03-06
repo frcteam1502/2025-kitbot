@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
+import com.revrobotics.spark.SparkMax;
 
 import java.util.function.Supplier;
 
@@ -15,9 +16,11 @@ import org.team1502.drivers.MecanumDriver;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.units.measure.Angle;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.MecanumControllerCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -34,6 +37,7 @@ public class DriveSubsystem extends SubsystemBase {
 
     final MecanumDriver m_drive;
     final RobotConfiguration m_robotConfiguration;
+    SparkMax[] m_modules;
 
     /** Creates a new DriveSubsystem. */
     public DriveSubsystem(RobotConfiguration robotConfiguration) {
@@ -42,16 +46,31 @@ public class DriveSubsystem extends SubsystemBase {
         // set up gyro and angle suppliers
         m_gyro = robotConfiguration.Pigeon2().buildPigeon2();
         m_gyroYaw = m_gyro.getYaw().asSupplier();
-        m_gyroRotation2d = ()->new Rotation2d(m_gyroYaw.get());
+        
+        // NOTE: invert Gyro
+        m_gyroRotation2d = ()->new Rotation2d(m_gyroYaw.get().times(-1.0));
         
         zeroHeading(); // whichever way we are pointing is 0 (+X direction)
 
         m_drive = robotConfiguration.MecanumDrive().buildDriver(m_gyroRotation2d);
+        m_modules = m_robotConfiguration.MecanumDrive().getModules()
+            .stream()
+            .map(mcb->(SparkMax)mcb.CANSparkMax())
+            .toArray(SparkMax[]::new);
+
     }
 
     @Override
     public void periodic() {
         m_drive.update(); // Update the mecanum driver in the periodic block
+        
+        SmartDashboard.putNumber("Px", m_modules[0].getEncoder().getPosition());
+        SmartDashboard.putNumber("Vx", m_modules[0].getEncoder().getVelocity());
+        SmartDashboard.putNumber("Angle", m_gyro.getAngle());
+        SmartDashboard.putNumber("turn rate (rad)", m_gyro.getRate());
+        SmartDashboard.putNumber("Xaccel (rad)", m_gyro.getAccelerationX().getValueAsDouble());
+        SmartDashboard.putNumber("rot2d (deg)", m_gyroRotation2d.get().getDegrees());
+        SmartDashboard.putNumber("rot2d (rad)", m_gyroRotation2d.get().getRadians());
     }
 
     /**
@@ -87,6 +106,11 @@ public class DriveSubsystem extends SubsystemBase {
      */
     public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative) {
         m_drive.drive(xSpeed, ySpeed, rot, fieldRelative);
+        var gyroAngle = m_gyroRotation2d.get();
+        var input = new Translation2d(xSpeed, ySpeed).rotateBy(gyroAngle.unaryMinus());
+        SmartDashboard.putNumber("Vx2", input.getX());
+        SmartDashboard.putNumber("Vy2", input.getY());
+
     }
 
     public TrajectoryConfig getTrajectoryConfig() {

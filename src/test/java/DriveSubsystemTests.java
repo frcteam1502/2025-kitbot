@@ -89,7 +89,7 @@ public class DriveSubsystemTests {
         assertEquals(0.0, m_modules[2].get(), 0.01);
         assertEquals(1.0, m_modules[3].get());
 
-        gyroAngle = Units.Degree.of(45);
+        gyroAngle = Units.Degree.of(-45);
         m_driveSubsystem.drive(0.0, 1.0, 0.0, true);
         dumpModules("Field-Left with 45 deg gyro == robot-NW");
         assertEquals(1.0, m_modules[0].get());

@@ -17,23 +17,25 @@ public class CoralIntakeCommands extends Command {
     public void initialize(){
         //m_subsystem.reset();
 
-        Operator.X
+        Operator.X//eat
             .onTrue(new InstantCommand(() -> m_subsystem.in()))
             .onFalse(new InstantCommand(() -> m_subsystem.stop()));
-        Operator.B
+        Operator.B//arf
             .onTrue(new InstantCommand(() -> m_subsystem.out()))
             .onFalse(new InstantCommand(() -> m_subsystem.stop()));
-        Operator.A
-            .onTrue(new InstantCommand(() -> m_subsystem.front()))
-            .onFalse(new InstantCommand(() -> m_subsystem.stay()));
-        Operator.Y
-            .onTrue(new InstantCommand(() -> m_subsystem.back()))
-            .onFalse(new InstantCommand(() -> m_subsystem.stay()));
+        // Operator.rightTrigger(0)
+        //     .onTrue(new InstantCommand(() -> m_subsystem.front()))
+        //     .onFalse(new InstantCommand(() -> m_subsystem.stay()));
+        // Operator.leftTrigger(0)
+        //     .onTrue(new InstantCommand(() -> m_subsystem.back()))
+        //     .onFalse(new InstantCommand(() -> m_subsystem.stay()));
 
     }
 
     @Override
     public void execute(){
+        m_subsystem.rotate(Operator.getRightTrigger()-Operator.getLeftTrigger());
     }
+
     
 }

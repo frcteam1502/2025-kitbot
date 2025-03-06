@@ -9,9 +9,7 @@ import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.team1502.Driver;
 
 public class Trajectory1Command extends Command {
     private final DriveSubsystem m_subsystem;
@@ -20,7 +18,7 @@ public class Trajectory1Command extends Command {
         m_subsystem = subsystem;
         addRequirements(subsystem);
     }
-
+    Command m_command;
     @Override
     public void initialize(){
         TrajectoryConfig config = m_subsystem.getTrajectoryConfig();
@@ -38,15 +36,17 @@ public class Trajectory1Command extends Command {
 
         m_subsystem.resetOdometry();
 
-        Command command = m_subsystem.buildMecanumControllerCommand(exampleTrajectory);
+        m_command = m_subsystem.buildMecanumControllerCommand(exampleTrajectory);
     }
 
     @Override
     public void execute(){
+        if (!m_command.isScheduled()) { m_command.schedule();}
     }
     
     @Override 
     public void end(boolean interrupted) {
+        if (interrupted && m_command.isScheduled()) {m_command.cancel();}
         m_subsystem.drive(0,0,0, false);
         m_subsystem.resetOdometry();
     }
