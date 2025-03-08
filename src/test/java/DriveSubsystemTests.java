@@ -25,7 +25,7 @@ public class DriveSubsystemTests {
 
     static Angle gyroAngle = Units.Degrees.of(0);
     public static Angle getAngle() {
-        return gyroAngle;
+        return gyroAngle.times(-1);
     }
 
     @BeforeEach // this method will run before each test
