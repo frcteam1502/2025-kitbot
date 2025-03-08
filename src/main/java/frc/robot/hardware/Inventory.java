@@ -51,13 +51,13 @@ public class Inventory {
         .MotorController(Names.Motors.Mecanum, Manufacturer.REVRobotics, c->c
             .Motor(Motor.NEO)
             .IdleMode(IdleMode.kBrake)
+            // TODO: velocity PID controllers for autonomous
             .GearBox(g-> g
                  .Gear("Stage1", 14, 50)
                  .Gear("Stage2", 14, 50) // 12.75:1, 44.11 ft-lbs, 445.18 rpm, 15.54 ft/s
                  .Wheel(Inches.of(8.0))
             )
             .SmartCurrentLimit(40)
-            // TODO: velocity PID controllers for autonomous
         )
         .MotorController(Names.Motors.Elevator, Manufacturer.REVRobotics, c->c
             .Motor(Motor.VORTEX)

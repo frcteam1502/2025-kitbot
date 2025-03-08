@@ -16,8 +16,6 @@ public class AlgaeIntakeCommands extends Command {
     @Override
     public void initialize(){
         //m_subsystem.reset();
-
-        // TODO: Algae buttons and commands
         
         Operator.RightBumper
             .onTrue(new InstantCommand(() -> m_subsystem.in()))

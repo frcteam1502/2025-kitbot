@@ -25,27 +25,23 @@ public class DriverCommands extends Command {
         m_subsystem.resetEncoders();
         m_subsystem.resetOdometry(new Pose2d());
 
-        Driver.RightBumper // TODO: rb broken on one of the controllers?
+        Driver.RightBumper
             .onTrue(new InstantCommand(() -> m_subsystem.setMaxOutput(0.5)))
             .onFalse(new InstantCommand(() -> m_subsystem.setMaxOutput(1)));
 
-        // TODO: reset gyro
         // TODO: finesse speed
     }
 
     @Override
     public void execute(){
-        // TODO: dead-band
         double forwardSpeed = MathUtil.applyDeadband(-Driver.getLeftY(), 0.05);
         double leftSpeed = MathUtil.applyDeadband(Driver.getLeftX(), 0.05);
         double cwSpeed = MathUtil.applyDeadband(Driver.getRightX(), 0.05);
        
-        // TODO: square inputs
-        forwardSpeed = forwardSpeed *forwardSpeed*forwardSpeed;
-        leftSpeed = leftSpeed*leftSpeed*leftSpeed;
-        cwSpeed = cwSpeed*cwSpeed*cwSpeed;
+        forwardSpeed = forwardSpeed * forwardSpeed * forwardSpeed;
+        leftSpeed = leftSpeed * leftSpeed * leftSpeed;
+        cwSpeed = cwSpeed * cwSpeed * cwSpeed;
         
-        // TODO: slew-rate
         forwardSpeed = xjerkLimiter.calculate(forwardSpeed);
         leftSpeed = yjerkLimiter.calculate(leftSpeed);
         cwSpeed = turnLimiter.calculate(cwSpeed);

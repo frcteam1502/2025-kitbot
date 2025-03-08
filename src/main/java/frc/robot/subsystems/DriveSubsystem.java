@@ -42,7 +42,7 @@ public class DriveSubsystem extends SubsystemBase {
         // set up gyro and angle suppliers
         m_gyro = robotConfiguration.Pigeon2().buildPigeon2();
         m_gyroYaw = m_gyro.getYaw().asSupplier();
-        m_gyroRotation2d = ()->new Rotation2d(m_gyroYaw.get());
+        m_gyroRotation2d = ()->new Rotation2d(m_gyroYaw.get().times(-1.0));
         
         zeroHeading(); // whichever way we are pointing is 0 (+X direction)
 
