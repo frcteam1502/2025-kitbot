@@ -32,15 +32,19 @@ public class CoralIntakeSubsystem extends SubsystemBase {
         m_intakeMotor.set(0);    
     }   
 
-    public void front () {
-        m_rotateMotor.set(0.3);    
+    public void front (double speed) {
+        m_rotateMotor.set(speed);    
     }   
 
-    public void back () {
-        m_rotateMotor.set(-0.3);    
+    public void rotate (double speed) {
+        m_rotateMotor.set(speed);    
     }   
 
-    public void stay () {
-        m_rotateMotor.set(0);    
+    public void back (double speed) {
+        m_rotateMotor.set(speed);    
     }   
+
+    // public void stay () {
+    //     m_rotateMotor.set(0);    
+    // }   
 }
