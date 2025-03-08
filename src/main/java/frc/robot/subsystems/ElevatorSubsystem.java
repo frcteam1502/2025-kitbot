@@ -7,6 +7,7 @@ import org.team1502.configuration.factory.RobotConfiguration;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.ControlType;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.commands.ElevatorCommands;
 
@@ -17,7 +18,10 @@ public class ElevatorSubsystem extends SubsystemBase {
     public ElevatorSubsystem(RobotConfiguration robotConfiguration) {
         m_motor = robotConfiguration.MotorController("Motor").buildSparkMax();
     }
-
+    @Override 
+    public void periodic() {
+        SmartDashboard.putNumber("ELEVATOR", m_motor.getEncoder().getPosition());
+    } 
     public void raise() {
         m_motor.set(0.3);
     }

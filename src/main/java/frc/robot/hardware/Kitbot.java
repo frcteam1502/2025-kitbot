@@ -85,6 +85,7 @@ public class Kitbot {
                     .CanNumber(15)
                     .Abbreviation("CI"))
                 .MotorController("Rotate", Inventory.Names.Motors.CoralRotate, c->c
+                    .PID(1.2,0.0002,0)
                     .PDH(17)
                     .CanNumber(16)
                     .Abbreviation("CR")))

@@ -23,12 +23,8 @@ public class CoralIntakeCommands extends Command {
         Operator.B//arf
             .onTrue(new InstantCommand(() -> m_subsystem.out()))
             .onFalse(new InstantCommand(() -> m_subsystem.stop()));
-        // Operator.rightTrigger(0)
-        //     .onTrue(new InstantCommand(() -> m_subsystem.front()))
-        //     .onFalse(new InstantCommand(() -> m_subsystem.stay()));
-        // Operator.leftTrigger(0)
-        //     .onTrue(new InstantCommand(() -> m_subsystem.back()))
-        //     .onFalse(new InstantCommand(() -> m_subsystem.stay()));
+        Operator.West
+            .onTrue(new InstantCommand(() -> m_subsystem.setPos(0.547)));
 
     }
 
