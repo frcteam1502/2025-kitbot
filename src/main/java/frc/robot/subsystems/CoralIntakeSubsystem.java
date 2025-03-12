@@ -7,6 +7,7 @@ import org.team1502.configuration.factory.RobotConfiguration;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.ControlType;
 
+import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.commands.CoralIntakeCommands;
@@ -23,7 +24,10 @@ public class CoralIntakeSubsystem extends SubsystemBase {
  @Override 
     public void periodic() {
         SmartDashboard.putNumber("ROTATE", m_rotateMotor.getEncoder().getPosition());
-    } 
+        SmartDashboard.putNumber("ROTATEVOLTAGE", m_rotateMotor.getAppliedOutput());
+        feedforward.calculate(m_rotateMotor.getEncoder().getPosition(), 0.5);
+    }
+    ArmFeedforward feedforward = new ArmFeedforward(0, 0.8, 473 );
     public void in () {
         m_intakeMotor.set(0.2);
     }
