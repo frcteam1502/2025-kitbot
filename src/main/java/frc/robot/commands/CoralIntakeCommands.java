@@ -19,7 +19,7 @@ public class CoralIntakeCommands extends Command {
     }
 
     @Override
-    public void initialize()
+    public void initialize() {
         //m_subsystem.reset();
 
         Operator.X//eat
