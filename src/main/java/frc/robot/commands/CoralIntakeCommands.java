@@ -32,23 +32,33 @@ public class CoralIntakeCommands extends Command {
         Operator.West.onTrue(new InstantCommand(() -> m_subsystem.setPos(0.547)));
 
     }
-    double setpoint = 0.0;
     
+    double setpoint = 0.0;
+    double error = 0.0;
+    double P = 1.0;
+    double D = 1.0;
+
     @Override
     public void execute(){
 
         double move = Operator.getRightTrigger() - Operator.getLeftTrigger();
         setpoint += move; // setpoint = setpoint + move;
         double position = Units.rotationsToRadians(m_subsystem.getPosition());
-        double velocity = setpoint - position;
-        double feedforward = m_feedforward.calculate(setpoint, velocity);
-        m_subsystem.rotate(feedforward);
+        double positionError = setpoint - position;
+        double delta = error - positionError;
+        error = positionError;
+        double velocitySetpoint = delta;
+
+        double feedforward = m_feedforward.calculate(setpoint, velocitySetpoint);
+        double pid = P * error + D * delta;
+        m_subsystem.rotate(feedforward + pid);
 
         SmartDashboard.putNumber(getName()+":setpoint", setpoint);
         SmartDashboard.putNumber(getName()+":position", position);
         SmartDashboard.putNumber(getName()+":err", position - setpoint);
-        SmartDashboard.putNumber(getName()+":velocity", velocity);
-        SmartDashboard.putNumber(getName()+":speed", feedforward);
+        SmartDashboard.putNumber(getName()+":velocitySetpoint", velocitySetpoint);
+        SmartDashboard.putNumber(getName()+":feedforward", feedforward);
+        SmartDashboard.putNumber(getName()+":pid", pid);
         SmartDashboard.putNumber(getName()+":Vg", m_feedforward.getKg() * Math.cos(setpoint));
     }
 
