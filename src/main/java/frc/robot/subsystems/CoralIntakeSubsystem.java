@@ -21,7 +21,7 @@ public class CoralIntakeSubsystem extends SubsystemBase {
     public CoralIntakeSubsystem(RobotConfiguration robotConfiguration) {
         m_intakeMotor = robotConfiguration.MotorController("Intake").buildSparkMax();
         m_rotateMotor = robotConfiguration.MotorController("Rotate").buildSparkMax();
-        m_rotateMotor.getEncoder().setPosition(-0.66);
+        m_rotateMotor.getEncoder().setPosition(-0.10675);
     }
     
     // ArmFeedforward feedforward = new ArmFeedforward(0, 0.8, 0.5 );

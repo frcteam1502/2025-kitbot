@@ -11,7 +11,7 @@ import frc.robot.team1502.Operator;
 public class CoralIntakeCommands extends Command {
     private final CoralIntakeSubsystem m_subsystem;
         
-    ArmFeedforward m_feedforward = new ArmFeedforward(0, 0.8, 0.5 );
+    ArmFeedforward m_feedforward = new ArmFeedforward(0, 0.055, 0.5 );
 
     public CoralIntakeCommands(CoralIntakeSubsystem subsystem) {
         m_subsystem = subsystem;
@@ -19,7 +19,7 @@ public class CoralIntakeCommands extends Command {
     }
 
     @Override
-    public void initialize()
+    public void initialize(){
         //m_subsystem.reset();
 
         Operator.X//eat
@@ -29,7 +29,10 @@ public class CoralIntakeCommands extends Command {
             .onTrue(new InstantCommand(() -> m_subsystem.out()))
             .onFalse(new InstantCommand(() -> m_subsystem.stop()));
         
-        Operator.West.onTrue(new InstantCommand(() -> m_subsystem.setPos(0.547)));
+        Operator.West.onTrue(new InstantCommand(() -> setpoint=Units.degreesToRadians(180)));
+        Operator.East.onTrue(new InstantCommand(() -> setpoint=Units.degreesToRadians(0)));
+        Operator.North.onTrue(new InstantCommand(() -> setpoint=Units.degreesToRadians(90)));
+        Operator.South.onTrue(new InstantCommand(() -> setpoint=Units.degreesToRadians(45)));
 
     }
     double setpoint = 0.0;
@@ -39,9 +42,9 @@ public class CoralIntakeCommands extends Command {
 
         double move = Operator.getRightTrigger() - Operator.getLeftTrigger();
         setpoint += move; // setpoint = setpoint + move;
-        double position = Units.rotationsToRadians(m_subsystem.getPosition());
+        double position = m_subsystem.getPosition();
         double velocity = setpoint - position;
-        double feedforward = m_feedforward.calculate(setpoint, velocity);
+        double feedforward = m_feedforward.calculate(setpoint, velocity/3);
         m_subsystem.rotate(feedforward);
 
         SmartDashboard.putNumber(getName()+":setpoint", setpoint);
