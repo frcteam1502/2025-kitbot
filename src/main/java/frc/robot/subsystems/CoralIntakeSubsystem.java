@@ -45,7 +45,7 @@ public class CoralIntakeSubsystem extends SubsystemBase {
     }
     
     
-    
+
     public void in () {
         m_intakeMotor.set(0.2);
     }
