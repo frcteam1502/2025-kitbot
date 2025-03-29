@@ -5,7 +5,7 @@ import java.util.List;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.CoralIntakeSubsystem;
 
-public class ArmTestAuto extends AutoCommand {
+public class ArmTestAuto extends Command {
     private final CoralIntakeSubsystem m_subsystem;
 
     public ArmTestAuto(CoralIntakeSubsystem subsystem) {
@@ -20,7 +20,7 @@ public class ArmTestAuto extends AutoCommand {
 
     @Override
     public void execute() {
-       m_rotateMotor.set(0.2);
+       m_subsystem.rotate(0.2);
        
     }
 }
