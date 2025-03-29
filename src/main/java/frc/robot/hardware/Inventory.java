@@ -81,7 +81,7 @@ public class Inventory {
         )
         .MotorController(Names.Motors.CoralRotate, Manufacturer.REVRobotics, c->c
             .Motor(Motor.NEO)
-            .IdleMode(IdleMode.kBrake)
+            .IdleMode(IdleMode.kCoast)
             .GearBox(g-> g 
                  .Gear("Stage1", 1, 4) 
                  .Gear("Stage2", 1, 5) 
