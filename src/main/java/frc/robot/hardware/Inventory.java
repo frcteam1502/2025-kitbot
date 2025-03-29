@@ -6,7 +6,9 @@ import java.util.Arrays;
 import java.util.function.Consumer;
 
 import org.team1502.configuration.CAN.Manufacturer;
+import org.team1502.configuration.builders.motors.GearBox;
 import org.team1502.configuration.builders.motors.Motor;
+import org.team1502.configuration.builders.motors.MotorControllerBuilder;
 import org.team1502.configuration.factory.PartFactory;
 import org.team1502.configuration.factory.RobotConfiguration;
 
@@ -47,6 +49,27 @@ public class Inventory {
         );
     }
 
+    /** Will set position conversion factor to radians */
+    public static GearBox Chain(GearBox gearbox, String chainNumber, int drivingTeeth, int drivenTeeth) {
+        double reduction = getChainReduction(chainNumber, drivingTeeth, drivenTeeth);
+        double actuatorHack = 2 / reduction; // will end up in Radians when PI is factored in
+        gearbox.Value(MotorControllerBuilder.wheelDiameter, actuatorHack);
+
+        return gearbox;
+    }
+    public static double getChainReduction(String chainNumber, int drivingTeeth, int drivenTeeth) {
+        
+        return getPitchDiameter(chainNumber, drivenTeeth) / getPitchDiameter(chainNumber, drivingTeeth);
+    }
+    public static double getPitchDiameter(String chainNumber, int teeth) {
+        double pitch = 2.0;
+        if (chainNumber == "25") {
+            pitch = 2.0;
+        }
+        double chainPitch = pitch/8.0;
+        return chainPitch/Math.sin(Math.PI / teeth);
+
+    }
     public static void Kitbot(PartFactory inventory) { inventory
         .MotorController(Names.Motors.Mecanum, Manufacturer.REVRobotics, c->c
             .Motor(Motor.NEO)
@@ -82,10 +105,10 @@ public class Inventory {
         .MotorController(Names.Motors.CoralRotate, Manufacturer.REVRobotics, c->c
             .Motor(Motor.NEO)
             .IdleMode(IdleMode.kBrake)
-            .GearBox(g-> g 
+            .GearBox(g-> Chain(g, "25", 16, 48) 
                  .Gear("Stage1", 1, 4) 
                  .Gear("Stage2", 1, 5) 
-                 .Wheel(Inches.of(4)) 
+                 //TODO: Chain(#25, 16 tooth, 48 tooth)
             )
             .SmartCurrentLimit(40)
         )
