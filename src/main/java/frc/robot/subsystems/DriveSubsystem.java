@@ -23,7 +23,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.commands.DriverCommands;
 
-@SubsystemInfo(disabled = true)
+@SubsystemInfo(disabled = false)
 @DefaultCommand(command = DriverCommands.class)
 public class DriveSubsystem extends SubsystemBase {
     final Pigeon2 m_gyro;

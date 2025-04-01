@@ -19,7 +19,7 @@ public class CoralIntakeCommands extends Command {
     }
 
     @Override
-    public void initialize(){
+    public void initialize() {
         //m_subsystem.reset();
 
         Operator.X//eat
@@ -35,39 +35,33 @@ public class CoralIntakeCommands extends Command {
         Operator.South.onTrue(new InstantCommand(() -> setpoint=Units.degreesToRadians(45)));
 
     }
+    
     double setpoint = 0.0;
-    double error =0.0;
-    double P = 0;
-    double D = 0;
+    double error = 0.0;
+    double P = 1.0;
+    double D = 1.0;
 
     @Override
     public void execute(){
         double move = Operator.getRightTrigger() - Operator.getLeftTrigger();
-        setpoint += (move * move * move * 0.5); // setpoint = setpoint + move;
-        double position = (m_subsystem.getPosition());
-        double velocity = setpoint - position;
-        double positionError =  setpoint - position;
+        setpoint += move; // setpoint = setpoint + move;
+
+        double position = m_subsystem.getPosition();
+        double positionError = setpoint - position;
         double delta = error - positionError;
         error = positionError;
-        double velocitySetpoint = positionError; 
+        double velocitySetpoint = error;
+
         double feedforward = m_feedforward.calculate(setpoint, velocitySetpoint);
-        
         double pid = P * error + D * delta;
-        double speed = feedforward + pid;
-        if  (position <= -0.6 && speed < 0) {
-            speed = 0;
-        }
-        if  (position >= 0.36 && speed > 0) {
-            speed = 0;
-        }
-        m_subsystem.rotate(speed);
-        
+        m_subsystem.rotate(feedforward + pid);
 
         SmartDashboard.putNumber(getName()+":setpoint", setpoint);
         SmartDashboard.putNumber(getName()+":position", position);
         SmartDashboard.putNumber(getName()+":err", position - setpoint);
-        SmartDashboard.putNumber(getName()+":velocity", velocity);
-        SmartDashboard.putNumber(getName()+":speed", feedforward);
+        SmartDashboard.putNumber(getName()+":velocitySetpoint", velocitySetpoint);
+        SmartDashboard.putNumber(getName()+":feedforward", feedforward);
+        SmartDashboard.putNumber(getName()+":pid", pid);
         SmartDashboard.putNumber(getName()+":Vg", m_feedforward.getKg() * Math.cos(setpoint));
     }
 
