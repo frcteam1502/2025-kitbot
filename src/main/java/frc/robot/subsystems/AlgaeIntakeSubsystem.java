@@ -12,11 +12,13 @@ import frc.robot.commands.AlgaeIntakeCommands;
 @SubsystemInfo(disabled = true)
 @DefaultCommand(command = AlgaeIntakeCommands.class)
 public class AlgaeIntakeSubsystem extends SubsystemBase {
+    public static final String Wheels = "Wheels";
+    public static final String Rotate = "Rotate";
     final SparkMax m_intakeMotor;
     final SparkMax m_rotateMotor;
     public AlgaeIntakeSubsystem(RobotConfiguration robotConfiguration) {
-        m_intakeMotor = robotConfiguration.MotorController("Intake").buildSparkMax();
-        m_rotateMotor = robotConfiguration.MotorController("Rotate").buildSparkMax();
+        m_intakeMotor = robotConfiguration.MotorController(Wheels).buildSparkMax();
+        m_rotateMotor = robotConfiguration.MotorController(Rotate).buildSparkMax();
     }
 
     public void in () {
