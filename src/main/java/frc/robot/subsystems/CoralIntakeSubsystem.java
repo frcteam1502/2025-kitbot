@@ -46,7 +46,9 @@ public class CoralIntakeSubsystem extends SubsystemBase {
     }   
 
     public void front (double speed) {
-        m_rotateMotor.set(speed);    
+        double direction = Math.signum(speed);
+        speed = Math.min(Math.abs(speed), 0.1);
+        m_rotateMotor.set(direction * speed);    
     }   
 
     public void rotate (double speed) {
