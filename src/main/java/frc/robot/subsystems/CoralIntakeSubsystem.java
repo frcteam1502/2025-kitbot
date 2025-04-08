@@ -50,7 +50,13 @@ public class CoralIntakeSubsystem extends SubsystemBase {
     }   
 
     public void rotate (double speed) {
-        m_rotateMotor.set(speed);    
+        double actSpeed = Math.abs(speed);
+        if (actSpeed <= 0.1) {
+            m_rotateMotor.set(speed);
+        } else {
+            m_rotateMotor.set(speed * 0.5);
+        }
+         
     }   
 
     public void back (double speed) {
