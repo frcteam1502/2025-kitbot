@@ -10,13 +10,14 @@ import com.revrobotics.spark.SparkBase.ControlType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.commands.ElevatorCommands;
+import frc.robot.hardware.Inventory;
 
 @SubsystemInfo(disabled = false)
 @DefaultCommand(command = ElevatorCommands.class)
 public class ElevatorSubsystem extends SubsystemBase {
     final SparkMax m_motor;
     public ElevatorSubsystem(RobotConfiguration robotConfiguration) {
-        m_motor = robotConfiguration.MotorController().buildSparkMax();
+        m_motor = robotConfiguration.MotorController(Inventory.Names.Motors.Elevator).buildSparkMax();
     }
     @Override 
     public void periodic() {

@@ -75,7 +75,7 @@ public class Kitbot {
                 )
             )
             .Subsystem(ElevatorSubsystem.class, sys->sys
-                .MotorController(Inventory.Names.Motors.Elevator, c->c
+                .MotorController(Inventory.Names.Motors.Elevator, Inventory.Names.Motors.Elevator, c->c
                     .PDH(1)//Change when connected!!
                     .CanNumber(6)
                     .Abbreviation("Elv")))
@@ -92,11 +92,11 @@ public class Kitbot {
             .Subsystem(AlgaeIntakeSubsystem.class, sys->sys
                 .MotorController(AlgaeIntakeSubsystem.Wheels, Inventory.Names.Motors.AlgaeWheels, c->c
                     .PDH(17)
-                    .CanNumber(16)
+                    .CanNumber(20)
                     .Abbreviation("AW"))
                 .MotorController(AlgaeIntakeSubsystem.Rotate, Inventory.Names.Motors.AlgaeRotate, c->c
-                    .PDH(17)
-                    .CanNumber(16)
+                    .PDH(18)
+                    .CanNumber(19)
                     .Abbreviation("AR")))
             
         ));
