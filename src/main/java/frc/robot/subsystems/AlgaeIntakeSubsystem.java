@@ -9,7 +9,7 @@ import com.revrobotics.spark.SparkMax;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.commands.AlgaeIntakeCommands;
 
-@SubsystemInfo(disabled = true)
+@SubsystemInfo(disabled = false)
 @DefaultCommand(command = AlgaeIntakeCommands.class)
 public class AlgaeIntakeSubsystem extends SubsystemBase {
     public static final String Wheels = "Wheels";
