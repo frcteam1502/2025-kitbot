@@ -26,6 +26,14 @@ import frc.robot.commands.DriverCommands;
 @SubsystemInfo(disabled = false)
 @DefaultCommand(command = DriverCommands.class)
 public class DriveSubsystem extends SubsystemBase {
+    public static final String FrontLeft = "Front Left";
+    public static final String FrontRight = "Front Right";
+    public static final String RearLeft = "Rear Left";
+    public static final String RearRight = "Rear Right";
+
+
+
+
     final Pigeon2 m_gyro;
     /** generic Angle in degrees CW */
     public /* final */ Supplier<Angle> m_gyroYaw;

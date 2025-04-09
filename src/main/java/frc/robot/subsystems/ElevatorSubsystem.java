@@ -11,12 +11,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.commands.ElevatorCommands;
 
-@SubsystemInfo(disabled = true)
+@SubsystemInfo(disabled = false)
 @DefaultCommand(command = ElevatorCommands.class)
 public class ElevatorSubsystem extends SubsystemBase {
     final SparkMax m_motor;
     public ElevatorSubsystem(RobotConfiguration robotConfiguration) {
-        m_motor = robotConfiguration.MotorController("Motor").buildSparkMax();
+        m_motor = robotConfiguration.MotorController().buildSparkMax();
     }
     @Override 
     public void periodic() {

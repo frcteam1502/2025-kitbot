@@ -15,7 +15,7 @@ public class ArmTestAuto extends Command {
 
     @Override 
     public void initialize() {
-        m_subsystem.setPos(0.5);
+        m_subsystem.setPosition(0.0);
     }
 
     @Override

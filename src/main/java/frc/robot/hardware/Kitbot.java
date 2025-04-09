@@ -47,20 +47,20 @@ public class Kitbot {
                         Inches.of((double)1/8 + 17 + (double)1/8 + 3),
                         Inches.of(20 + (double)1/2))
                     )
-                    .MotorController("Front Left", Inventory.Names.Motors.Mecanum, c->c
+                    .MotorController(DriveSubsystem.FrontLeft, Inventory.Names.Motors.Mecanum, c->c
                         .PDH(19)
                         .CanNumber(3)
                         .Abbreviation("FL"))
-                    .MotorController("Front Right", Inventory.Names.Motors.Mecanum, c->c
+                    .MotorController(DriveSubsystem.FrontRight, Inventory.Names.Motors.Mecanum, c->c
                         .Reversed()
                         .PDH(18)
                         .CanNumber(5)
                         .Abbreviation("FR"))
-                    .MotorController("Rear Left", Inventory.Names.Motors.Mecanum, c->c
+                    .MotorController(DriveSubsystem.RearLeft, Inventory.Names.Motors.Mecanum, c->c
                         .PDH(1)
                         .CanNumber(4)
                         .Abbreviation("RL"))
-                    .MotorController("Rear Right", Inventory.Names.Motors.Mecanum, c->c
+                    .MotorController(DriveSubsystem.RearRight, Inventory.Names.Motors.Mecanum, c->c
                         .Reversed()
                         .PDH(0)
                         .CanNumber(14)
@@ -75,16 +75,16 @@ public class Kitbot {
                 )
             )
             .Subsystem(ElevatorSubsystem.class, sys->sys
-                .MotorController("Motor", Inventory.Names.Motors.Elevator, c->c
+                .MotorController(Inventory.Names.Motors.Elevator, c->c
                     .PDH(1)//Change when connected!!
                     .CanNumber(6)
                     .Abbreviation("Elv")))
             .Subsystem(CoralIntakeSubsystem.class, sys->sys
-                .MotorController("Intake", Inventory.Names.Motors.CoralIntake, c->c
+                .MotorController(CoralIntakeSubsystem.Intake, Inventory.Names.Motors.CoralIntake, c->c
                     .PDH(17)
                     .CanNumber(15)
                     .Abbreviation("CI"))
-                .MotorController("Rotate", Inventory.Names.Motors.CoralRotate, c->c
+                .MotorController(CoralIntakeSubsystem.Rotate, Inventory.Names.Motors.CoralRotate, c->c
                     .PID(1.2,0.0002,0)
                     .PDH(17)
                     .CanNumber(16)
