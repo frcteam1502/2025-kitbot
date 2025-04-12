@@ -29,8 +29,8 @@ public class CoralIntakeCommands extends Command {
             .onTrue(new InstantCommand(() -> m_subsystem.out()))
             .onFalse(new InstantCommand(() -> m_subsystem.stop()));
         
-        Operator.West.onTrue(new InstantCommand(() -> setpoint=Units.degreesToRadians(180)));
-        Operator.East.onTrue(new InstantCommand(() -> setpoint=Units.degreesToRadians(0)));
+        //Operator.West.onTrue(new InstantCommand(() -> setpoint=Units.degreesToRadians(180)));
+        //Operator.East.onTrue(new InstantCommand(() -> setpoint=Units.degreesToRadians(0)));
         Operator.North.onTrue(new InstantCommand(() -> setpoint=Units.degreesToRadians(90)));
         Operator.South.onTrue(new InstantCommand(() -> setpoint=Units.degreesToRadians(45)));
 

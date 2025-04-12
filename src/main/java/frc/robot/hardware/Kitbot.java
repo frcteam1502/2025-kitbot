@@ -90,11 +90,11 @@ public class Kitbot {
                     .CanNumber(16)
                     .Abbreviation("CR")))
             .Subsystem(AlgaeIntakeSubsystem.class, sys->sys
-                .MotorController("Wheels", Inventory.Names.Motors.AlgaeWheels, c->c
+                .MotorController(AlgaeIntakeSubsystem.Wheels, Inventory.Names.Motors.AlgaeWheels, c->c
                     .PDH(17)
                     .CanNumber(20)
                     .Abbreviation("AW"))
-                .MotorController("Rotate", Inventory.Names.Motors.AlgaeRotate, c->c
+                .MotorController(AlgaeIntakeSubsystem.Rotate, Inventory.Names.Motors.AlgaeRotate, c->c
                     .PDH(17)
                     .CanNumber(19)
                     .Abbreviation("AR")))
