@@ -29,14 +29,14 @@ public class CoralIntakeCommands extends Command {
             .onTrue(new InstantCommand(() -> m_subsystem.out()))
             .onFalse(new InstantCommand(() -> m_subsystem.stop()));
         
-        //Operator.West.onTrue(new InstantCommand(() -> setpoint=Units.degreesToRadians(180)));
-        //Operator.East.onTrue(new InstantCommand(() -> setpoint=Units.degreesToRadians(0)));
-        Operator.North.onTrue(new InstantCommand(() -> setpoint=Units.degreesToRadians(90)));
-        Operator.South.onTrue(new InstantCommand(() -> setpoint=Units.degreesToRadians(45)));
+        Operator.West.onTrue(new InstantCommand(() -> setpoint=Units.degreesToRadians(-35)));
+        Operator.East.onTrue(new InstantCommand(() -> setpoint=Units.degreesToRadians(0)));
+        //Operator.North.onTrue(new InstantCommand(() -> setpoint=Units.degreesToRadians(90)));
+        //Operator.South.onTrue(new InstantCommand(() -> setpoint=Units.degreesToRadians(45)));
 
     }
     
-    double setpoint = 0.0;
+    double setpoint = -0.106750;
     double error = 0.0;
     double P = 1.0;
     double D = 1.0;
@@ -44,7 +44,9 @@ public class CoralIntakeCommands extends Command {
     @Override
     public void execute(){
         double move = Operator.getRightTrigger() - Operator.getLeftTrigger();
+        move /= 10.0;
         setpoint += move; // setpoint = setpoint + move;
+
 
         double position = m_subsystem.getPosition();
         double positionError = setpoint - position;
