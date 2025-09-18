@@ -46,6 +46,6 @@ public class DriverCommands extends Command {
         leftSpeed = yjerkLimiter.calculate(leftSpeed);
         cwSpeed = turnLimiter.calculate(cwSpeed);
 
-        m_subsystem.drive(forwardSpeed, leftSpeed, cwSpeed, true);
+        m_subsystem.drive(forwardSpeed, leftSpeed, cwSpeed, false);
     }
 }

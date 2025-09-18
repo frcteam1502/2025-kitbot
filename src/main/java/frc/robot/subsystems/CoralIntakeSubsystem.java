@@ -14,12 +14,15 @@ import frc.robot.commands.CoralIntakeCommands;
 @SubsystemInfo(disabled = false)
 @DefaultCommand(command = CoralIntakeCommands.class)
 public class CoralIntakeSubsystem extends SubsystemBase {
+
+    public static final String Intake = "Intake";
+    public static final String Rotate = "Rotate";
     final SparkMax m_intakeMotor;
     final SparkMax m_rotateMotor;
     public CoralIntakeSubsystem(RobotConfiguration robotConfiguration) {
-        m_intakeMotor = robotConfiguration.MotorController("Intake").buildSparkMax();
-        m_rotateMotor = robotConfiguration.MotorController("Rotate").buildSparkMax();
-        m_rotateMotor.getEncoder().setPosition(-0.10675);
+        m_intakeMotor = robotConfiguration.MotorController(Intake).buildSparkMax();
+        m_rotateMotor = robotConfiguration.MotorController(Rotate).buildSparkMax();
+        m_rotateMotor.getEncoder().setPosition(-0.737244);
     }
     
     @Override 
@@ -52,7 +55,11 @@ public class CoralIntakeSubsystem extends SubsystemBase {
     }   
 
     public void rotate (double speed) {
-        m_rotateMotor.set(speed);    
+        double dir = Math.signum(speed);
+        speed = Math.min(Math.abs(speed), 0.2);
+        
+        m_rotateMotor.set(dir*speed);    
+
     }   
 
     public void back (double speed) {

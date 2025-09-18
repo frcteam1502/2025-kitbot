@@ -105,9 +105,10 @@ public class Inventory {
         .MotorController(Names.Motors.CoralRotate, Manufacturer.REVRobotics, c->c
             .Motor(Motor.NEO)
             .IdleMode(IdleMode.kCoast)
-            .GearBox(g-> Chain(g, "25", 16, 48) 
+            .GearBox(g-> Chain(g, "25", 16, 48)
                  .Gear("Stage1", 1, 4) 
                  .Gear("Stage2", 1, 5) 
+                 //.Gear("#25 Chain", 16, 48) 
                  //TODO: Chain(#25, 16 tooth, 48 tooth)
             )
             .SmartCurrentLimit(40)
