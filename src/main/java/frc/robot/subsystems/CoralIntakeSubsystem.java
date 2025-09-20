@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.commands.CoralIntakeCommands;
 
-@SubsystemInfo(disabled = true)
+@SubsystemInfo(disabled = false)
 @DefaultCommand(command = CoralIntakeCommands.class)
 public class CoralIntakeSubsystem extends SubsystemBase {
     public static final String Intake = "Intake";
