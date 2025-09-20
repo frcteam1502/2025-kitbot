@@ -23,17 +23,20 @@ public class CoralIntakeSubsystem extends SubsystemBase {
         m_intakeMotor = robotConfiguration.MotorController(Intake).buildSparkMax();
         m_rotateMotor = robotConfiguration.MotorController(Rotate).buildSparkMax();
 
-        double offsetrot =-7.333+0.5;
-        double offset = offsetrot * 0.105320;// (Math.PI*2)/60;
-         m_rotateMotor.getEncoder().setPosition(offset);
+        // double offsetrot =-7.333+0.5;
+        // double offset = offsetrot * 0.105320;// (Math.PI*2)/60;
+        //  m_rotateMotor.getEncoder().setPosition(offset);
     }
     
     @Override 
     public void periodic() {
-        if (GameState.isFirst()) {
-            double offsetrot =-7.333+0.5;
-            double offset = offsetrot * 0.105320;// (Math.PI*2)/60;
-             m_rotateMotor.getEncoder().setPosition(offset);    
+        if (GameState.isDisabled()) {
+            // double offsetrot =-7.333+0.5;
+            // double offset = offsetrot * 0.105320;// (Math.PI*2)/60;
+            //  m_rotateMotor.getEncoder().setPosition(offset);    
+             SmartDashboard.putString("state", "DISABLED");
+        } else {
+            SmartDashboard.putString("state", "ENABLED");
         }
         SmartDashboard.putNumber("ROTATE", m_rotateMotor.getEncoder().getPosition());
         SmartDashboard.putNumber("ROTATEVOLTAGE", m_rotateMotor.getAppliedOutput());

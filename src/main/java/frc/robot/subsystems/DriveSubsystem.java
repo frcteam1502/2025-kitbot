@@ -18,9 +18,10 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.units.measure.Angle;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.MecanumControllerCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
+import frc.robot.commands.DriveInstruction;
 import frc.robot.commands.DriverCommands;
 
 @SubsystemInfo(disabled = false)
@@ -48,10 +49,19 @@ public class DriveSubsystem extends SubsystemBase {
 
         m_drive = robotConfiguration.MecanumDrive().buildDriver(m_gyroRotation2d);
     }
-
+    int cycle = 0;
+    DriveInstruction m_instruction;
     @Override
     public void periodic() {
         m_drive.update(); // Update the mecanum driver in the periodic block
+        SmartDashboard.putNumber("cycle", cycle++);
+
+        if (m_instruction != null) {
+            SmartDashboard.putNumber("x-speed", m_instruction.x_speed());
+            SmartDashboard.putNumber("y-speed", m_instruction.y_speed());
+            SmartDashboard.putNumber("t-rot", m_instruction.t_rotation());
+        }
+
     }
 
     /**
@@ -89,6 +99,15 @@ public class DriveSubsystem extends SubsystemBase {
         m_drive.drive(xSpeed, ySpeed, rot, fieldRelative);
     }
 
+    public void drive(DriveInstruction instruction) {
+        m_instruction = instruction;
+        drive(
+            instruction.x_speed(),
+            instruction.y_speed(),
+            instruction.t_rotation(),
+            instruction.field()
+             );
+    }
     public TrajectoryConfig getTrajectoryConfig() {
         return m_drive.getTrajectoryConfig();  
     }
@@ -137,5 +156,10 @@ public class DriveSubsystem extends SubsystemBase {
      */
     public double getTurnRate() {
         return -m_gyro.getRate();
+    }
+
+    public void stop() {
+        m_instruction = new DriveInstruction(0,0,0, false, 0);
+        drive(0,0,0,false);
     }
 }

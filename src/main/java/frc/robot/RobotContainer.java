@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.commands.autos.Auto1;
 import frc.robot.commands.autos.ArmTestAuto;
 import frc.robot.commands.autos.Trajectory1Command;
 import frc.robot.hardware.Kitbot;
@@ -21,7 +22,7 @@ import org.team1502.injection.RobotFactory;
  */
 public class RobotContainer {
   // The robot's subsystems
-  private final DriveSubsystem m_robotDrive;
+  //private final DriveSubsystem m_robotDrive;
 
     /** The factory for the robot. Contains subsystems, IO devices, and commands. */
     public static RobotFactory robotFactory;
@@ -32,7 +33,7 @@ public class RobotContainer {
         robotConfiguration = Kitbot.buildRobot();
         robotFactory = RobotFactory.Create(Robot.class, robotConfiguration);
 
-        m_robotDrive = robotFactory.getInstance(DriveSubsystem.class);
+        //m_robotDrive = robotFactory.getInstance(DriveSubsystem.class);
         //m_robotDrive.setMaxOutput(0.25);
     }
 
@@ -44,7 +45,8 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {  
     //return new ForwardAuto(m_robotDrive); 
-    return new ArmTestAuto(robotFactory); 
+    //return new ArmTestAuto(robotFactory); 
+    return new Auto1(robotFactory); 
   }
 
 }

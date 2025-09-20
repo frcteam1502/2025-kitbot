@@ -36,11 +36,11 @@ public class DriverCommands extends Command {
     public void execute(){
         double forwardSpeed = MathUtil.applyDeadband(-Driver.getLeftY(), 0.05);
         double leftSpeed = MathUtil.applyDeadband(Driver.getLeftX(), 0.05);
-        double cwSpeed = MathUtil.applyDeadband(Driver.getRightX(), 0.05);
+        double cwSpeed = MathUtil.applyDeadband(Driver.getRightX(), 0.2);
        
         forwardSpeed = forwardSpeed * forwardSpeed * forwardSpeed;
         leftSpeed = leftSpeed * leftSpeed * leftSpeed;
-        cwSpeed = cwSpeed * cwSpeed * cwSpeed;
+        cwSpeed = cwSpeed * cwSpeed * cwSpeed * cwSpeed * cwSpeed; // must be odd
         
         forwardSpeed = xjerkLimiter.calculate(forwardSpeed);
         leftSpeed = yjerkLimiter.calculate(leftSpeed);

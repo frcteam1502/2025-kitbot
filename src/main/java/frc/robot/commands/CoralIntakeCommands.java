@@ -1,6 +1,9 @@
 package frc.robot.commands;
 
+import org.team1502.game.GameState;
+
 import edu.wpi.first.math.controller.ArmFeedforward;
+import edu.wpi.first.math.controller.HolonomicDriveController;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -29,22 +32,41 @@ public class CoralIntakeCommands extends Command {
             .onTrue(new InstantCommand(() -> m_subsystem.out()))
             .onFalse(new InstantCommand(() -> m_subsystem.stop()));
         
-        Operator.East.onTrue(new InstantCommand(() -> setpoint=3.4)); // place
-        Operator.West.onTrue(new InstantCommand(() -> setpoint=0.05)); // supply
+        Operator.East.onTrue(new InstantCommand(() -> setpoint=level1Position)); // place
+        Operator.West.onTrue(new InstantCommand(() -> setpoint=homePosition)); // supply
         // upper/lower bounds
         // Operator.North.onTrue(new InstantCommand(() -> setpoint=3.84));
         // Operator.South.onTrue(new InstantCommand(() -> setpoint=-0.7));
-
+        double restrot =-7.333+0.5;
+        restRad = restrot * 0.105320;// (Math.PI*2)/60;
+        m_subsystem.setPosition(restRad);
+        setpoint = restRad;
     }
-    
-    double setpoint = 0.035;
+    static double homePosition = 0.05;
+    static double level1Position = 3.4;
+    double restRad;
+    double setpoint;
     double error = 0.0;
     double P = 1.0;
     double D = .8;
 
+    public void moveTo(double destination) {
+        setpoint = destination;
+    }
+    public void moveToRest() {
+        setpoint = restRad;
+    }
+    public void moveToHome() {
+        setpoint = homePosition;
+    }
+    public void moveToLevel1() {
+        setpoint = level1Position;
+    }
     @Override
     public void execute(){
-
+        if (GameState.isDisabled()){
+            //m_subsystem.setPosition(restRad);
+        }
         double move = Operator.getRightTrigger() - Operator.getLeftTrigger();
         SmartDashboard.putNumber(getName()+":move", move);
         move /= 20;
@@ -64,7 +86,7 @@ public class CoralIntakeCommands extends Command {
 
         SmartDashboard.putNumber(getName()+":setpoint", setpoint);
         SmartDashboard.putNumber(getName()+":position", position);
-        SmartDashboard.putNumber(getName()+":err", position - setpoint);
+        SmartDashboard.putNumber(getName()+":err", positionError);
         SmartDashboard.putNumber(getName()+":velocitySetpoint", velocitySetpoint);
         SmartDashboard.putNumber(getName()+":feedforward", feedforward);
         SmartDashboard.putNumber(getName()+":pid", pid);
