@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import org.team1502.game.GameState;
+
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -44,11 +46,12 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+    GameState.robotPeriodic();
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
-  public void disabledInit() {}
+  public void disabledInit() {GameState.disabledInit();}
 
   @Override
   public void disabledPeriodic() {}
@@ -84,6 +87,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    GameState.teleopInit();
     //RobotContainer.robotFactory.getInstance(DriveSubsystem.class).resetEncoders();
   
     

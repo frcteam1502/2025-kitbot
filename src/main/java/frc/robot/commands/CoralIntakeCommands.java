@@ -29,30 +29,34 @@ public class CoralIntakeCommands extends Command {
             .onTrue(new InstantCommand(() -> m_subsystem.out()))
             .onFalse(new InstantCommand(() -> m_subsystem.stop()));
         
-        Operator.West.onTrue(new InstantCommand(() -> setpoint=Units.degreesToRadians(-35)));
-        Operator.East.onTrue(new InstantCommand(() -> setpoint=Units.degreesToRadians(0)));
-        //Operator.North.onTrue(new InstantCommand(() -> setpoint=Units.degreesToRadians(90)));
-        //Operator.South.onTrue(new InstantCommand(() -> setpoint=Units.degreesToRadians(45)));
+        Operator.East.onTrue(new InstantCommand(() -> setpoint=3.4)); // place
+        Operator.West.onTrue(new InstantCommand(() -> setpoint=0.05)); // supply
+        // upper/lower bounds
+        // Operator.North.onTrue(new InstantCommand(() -> setpoint=3.84));
+        // Operator.South.onTrue(new InstantCommand(() -> setpoint=-0.7));
 
     }
     
-    double setpoint = -0.106750;
+    double setpoint = 0.035;
     double error = 0.0;
     double P = 1.0;
-    double D = 1.0;
+    double D = .8;
 
     @Override
     public void execute(){
-        double move = Operator.getRightTrigger() - Operator.getLeftTrigger();
-        move /= 10.0;
-        setpoint += move; // setpoint = setpoint + move;
 
+        double move = Operator.getRightTrigger() - Operator.getLeftTrigger();
+        SmartDashboard.putNumber(getName()+":move", move);
+        move /= 20;
+        setpoint += move; // setpoint = setpoint + move;
+        if (setpoint > 3.7) {setpoint = 3.7;}
+        if (setpoint < -0.6) {setpoint = -0.6;}
 
         double position = m_subsystem.getPosition();
         double positionError = setpoint - position;
         double delta = error - positionError;
         error = positionError;
-        double velocitySetpoint = error;
+        double velocitySetpoint = error/10;
 
         double feedforward = m_feedforward.calculate(setpoint, velocitySetpoint);
         double pid = P * error + D * delta;

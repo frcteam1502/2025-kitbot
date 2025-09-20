@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.AlgaeIntakeSubsystem;
 import frc.robot.team1502.Driver;
-import frc.robot.team1502.Operator;
 
 public class AlgaeIntakeCommands extends Command {
     private final AlgaeIntakeSubsystem m_subsystem;
