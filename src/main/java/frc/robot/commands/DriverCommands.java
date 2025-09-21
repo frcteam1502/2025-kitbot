@@ -21,7 +21,7 @@ public class DriverCommands extends Command {
 
     @Override
     public void initialize(){
-        m_subsystem.zeroHeading();
+        //m_subsystem.zeroHeading(); NO!
         m_subsystem.resetEncoders();
         m_subsystem.resetOdometry(new Pose2d());
 
