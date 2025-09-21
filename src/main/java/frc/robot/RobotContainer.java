@@ -51,14 +51,14 @@ public class RobotContainer {
   
     public Command getAutonomousCommand() {          
         Command autonomousCommand;
-        String autoSelected = SmartDashboard.getString("Auto Selector", "Default"); 
+        String autoSelected = m_chooser.getSelected();
         switch(autoSelected) {
-        case "Auto Left":
-            autonomousCommand = new Auto1(robotFactory, -1); break;
-        case "Auto Right":
-        case "Default":
-        default: 
-            autonomousCommand = new Auto1(robotFactory, 1); break;
+            case "Auto Left":
+                autonomousCommand = new Auto1(robotFactory, -1); break;
+            case "Auto Right":
+            case "Default":
+            default: 
+                autonomousCommand = new Auto1(robotFactory, 1); break;
         }
         return autonomousCommand;
         //return new ForwardAuto(m_robotDrive); 
