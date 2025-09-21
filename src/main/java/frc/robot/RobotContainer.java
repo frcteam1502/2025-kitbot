@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.autos.Auto1;
 import frc.robot.commands.autos.ArmTestAuto;
@@ -28,13 +30,16 @@ public class RobotContainer {
     public static RobotFactory robotFactory;
     /** the structure of the robot */
     public static RobotConfiguration robotConfiguration;
+    private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
     public RobotContainer() {
         robotConfiguration = Kitbot.buildRobot();
         robotFactory = RobotFactory.Create(Robot.class, robotConfiguration);
 
-        //m_robotDrive = robotFactory.getInstance(DriveSubsystem.class);
-        //m_robotDrive.setMaxOutput(0.25);
+      m_chooser.setDefaultOption("Default", "Auto Right");
+      m_chooser.addOption("Right Side", "Auto Right");
+      m_chooser.addOption("Left Side", "Auto Left");
+      SmartDashboard.putData("Auto choices", m_chooser);
     }
 
 
@@ -43,10 +48,22 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand() {  
-    //return new ForwardAuto(m_robotDrive); 
-    //return new ArmTestAuto(robotFactory); 
-    return new Auto1(robotFactory); 
-  }
+  
+    public Command getAutonomousCommand() {          
+        Command autonomousCommand;
+        String autoSelected = SmartDashboard.getString("Auto Selector", "Default"); 
+        switch(autoSelected) {
+        case "Auto Left":
+            autonomousCommand = new Auto1(robotFactory, -1); break;
+        case "Auto Right":
+        case "Default":
+        default: 
+            autonomousCommand = new Auto1(robotFactory, 1); break;
+        }
+        return autonomousCommand;
+        //return new ForwardAuto(m_robotDrive); 
+        //return new ArmTestAuto(robotFactory); 
+        //return new Auto1(robotFactory); 
+    }
 
 }

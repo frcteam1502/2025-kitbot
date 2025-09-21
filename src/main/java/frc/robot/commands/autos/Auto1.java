@@ -4,26 +4,22 @@ import org.team1502.injection.RobotFactory;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.CoralIntakeCommands;
 import frc.robot.commands.DriveInstruction;
 import frc.robot.commands.TimedDriveCommand;
-import frc.robot.subsystems.CoralIntakeSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 
 public class Auto1 extends Command {
     private final DriveSubsystem m_driveSubsystem;
-    //private final CoralIntakeSubsystem m_coralIntakeSubsystem;
     private final CoralIntakeCommands m_coralIntakeCommands;
+    private final double m_sign;
 
     Command m_command;
-    public Auto1(RobotFactory robotFactory) {
+    public Auto1(RobotFactory robotFactory, double sign) {
         m_driveSubsystem = robotFactory.getInstance(DriveSubsystem.class);
-        //m_coralIntakeSubsystem = robotFactory.getInstance(CoralIntakeSubsystem.class);
+        m_sign = sign;
         m_coralIntakeCommands = robotFactory.getInstance(CoralIntakeCommands.class);
-
         SmartDashboard.putString("Auto1", "ctor");
         addRequirements(m_driveSubsystem);
         //addRequirements(m_driveSubsystem, m_coralIntakeSubsystem);
@@ -36,7 +32,7 @@ public class Auto1 extends Command {
         /* right side */
         m_command = new SequentialCommandGroup(
             new TimedDriveCommand(m_driveSubsystem, new DriveInstruction(-0.25, 0, 0, false, 4))                
-            ,new TimedDriveCommand(m_driveSubsystem, new DriveInstruction(0, 0, 0.1, false, 4))
+            ,new TimedDriveCommand(m_driveSubsystem, new DriveInstruction(0, 0, m_sign * 0.1, false, 3))
             ,new TimedDriveCommand(m_driveSubsystem, new DriveInstruction(-0.1, 0, 0, false, 4))
 
             // ,new TimedDriveCommand(m_driveSubsystem, new DriveInstruction(0.1, 0, 0, false, 4))
